@@ -9,5 +9,19 @@ public class AsientoLibre extends Asiento {
 		this.reservado = false;
 		this.precio = precio;
 	}
-
+	public double getPrecio() {
+		return precio;
+	}
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+	
+	public String toString() {
+        return "AsientoLibre{" +
+                "fila=" + getFila() +
+                ", letra='" + getLetra() + '\'' +
+                ", reservado=" + isReservado() +
+                ", precio=" + precio +
+                '}';
+    }
 }
