@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-	do {
+
 		StringBuffer str = new StringBuffer();
 		
 		str.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°");
