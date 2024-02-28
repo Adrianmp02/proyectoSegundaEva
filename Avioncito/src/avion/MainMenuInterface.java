@@ -6,7 +6,7 @@ public interface MainMenuInterface {
 	
 	/**
 	 * El método main va en esta clase*/
-	public void main(String[] args);
+	public static void main(String[] args){}
 	
 	
 	/**
