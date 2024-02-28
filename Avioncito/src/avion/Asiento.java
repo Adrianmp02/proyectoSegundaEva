@@ -2,7 +2,7 @@ package avion;
 
 public class Asiento {
 
-	private boolean reservado;
+	protected boolean reservado;
 	private char letra;
 	private int fila;
 	
@@ -11,4 +11,6 @@ public class Asiento {
 		this.letra = letra;
 		this.fila = fila;
 	}
+	
+	
 }
