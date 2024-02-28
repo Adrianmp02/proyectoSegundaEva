@@ -19,7 +19,7 @@ public class Menu {
 		str.append("\n||                       ||");
 		str.append("\n");
 		str.append("|| １ ► Billete Suelto");
-		str.append("\uD83C\uDF40┊");
+		str.append("\uD83C\uDF40┊"); 
 		str.append(" ||");
 		str.append("\n||                       ||");
 		str.append("\n||                       ||");
