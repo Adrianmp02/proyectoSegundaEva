@@ -1,11 +1,25 @@
 package avion;
 
 public class AsientoOcupado extends Asiento {
-
-	public AsientoOcupado(char letra, int fila) {
-		super(letra, fila);
-		// TODO Auto-generated constructor stub
+	
+	private Persona p;
+	
+	public AsientoOcupado(String num, Persona p) {
+		super(num);
+		this.p = p;
+		this.reservado = true;
 	}
 
-	
+	public String toString() {
+
+		StringBuffer str = new StringBuffer();
+
+		str.append("Asiento: "+numAsiento);
+		str.append("\n");
+		str.append("Comprador: \n"+p);
+		str.append("\n");
+		str.append("----------------------------------------------");
+
+		return str.toString();
+	}
 }

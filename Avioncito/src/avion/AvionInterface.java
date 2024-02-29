@@ -10,7 +10,7 @@ public interface AvionInterface {
 	 * Debe asignar a cada uno su número de asiento (Ej: 23B)
 	 * @throws AvionException si se trata de crear un avion ya creado
 	 * */
-	public void crearAvion();
+	public void crearAvion() throws AvionException;
 	
 	
 	/**
@@ -19,7 +19,7 @@ public interface AvionInterface {
 	 * Debe asignar a cada uno su número de asiento (Ej: 23B)
 	 * @throws AvionException si se trata de mostrar un avión que no ha sido creado
 	 * */
-	public void mostrarAvion();
+	public void mostrarAvion() throws AvionException;
 	
 
 	/**
@@ -36,7 +36,7 @@ public interface AvionInterface {
 	 * @throws AsientoException si el número de asiento no es correcto
 	 * @throws AsientoException si el asiento ya estaba previamente reservado
 	 * */
-	public void reservarAsiento(String numAsiento, Persona comprador);
+	public void reservarAsiento(String numAsiento, Persona comprador) throws AsientoException;
 	
 	
 }

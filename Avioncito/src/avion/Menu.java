@@ -146,20 +146,23 @@ public class Menu implements MainMenuInterface {
 
 	@Override
 	public void comprarEntrada() {
-		// TODO Auto-generated method stub
 
+		
+		
 	}
 
 	@Override
 	public void comprarEntradas() {
-		// TODO Auto-generated method stub
 
+		
+		
 	}
 
 	@Override
 	public void comprobarAsiento() {
-		// TODO Auto-generated method stub
 
+		
+		
 	}
 
 	@Override

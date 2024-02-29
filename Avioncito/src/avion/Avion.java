@@ -12,7 +12,11 @@ public class Avion implements AvionInterface {
 	
 	
 	@Override
-	public void crearAvion() {
+	public void crearAvion() throws AvionException {
+		
+		if(asientos != null) {
+			throw new AvionException("Ya se encuentra un avion creado");
+		}
 		
 		fila = new ArrayList<Integer>();
 		letraTurista = new ArrayList<Character>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F'));
@@ -28,7 +32,7 @@ public class Avion implements AvionInterface {
 		//Asigancion de asientos Primera Clase
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < letraFirstClass.size(); j++) {
-				Asiento aux = new Asiento(letraFirstClass.get(j), fila.get(i));
+				Asiento aux = new AsientoLibre(""+fila.get(i)+letraFirstClass.get(j), 50.99);
 
 				asientos.add(aux);
 			}
@@ -37,7 +41,7 @@ public class Avion implements AvionInterface {
 		//Asignacion de asientos Turista
 		for(int i = 4; i < fila.size(); i++) {
 			for(int j = 0; j < letraTurista.size(); j++) {
-				Asiento aux = new Asiento(letraTurista.get(j), fila.get(i));
+				Asiento aux = new AsientoLibre(""+fila.get(i)+letraTurista.get(j), 25.99);
 
 				asientos.add(aux);
 			}
@@ -47,23 +51,69 @@ public class Avion implements AvionInterface {
 	}
 
 	@Override
-	public void mostrarAvion() {
-		// TODO Auto-generated method stub
-		StringBuffer str = new StringBuffer();
+	public void mostrarAvion() throws AvionException {
 		
-
+		if(asientos == null) {
+			throw new AvionException("No se puede mostrar el avion, no hay ningun avion creado");
+		}
+		//Recorremos la lista sacando por pantalla los asientos
+		for(int i = 0; i < asientos.size(); i++) {
+			System.out.println(asientos.get(i));
+		}
+		
 	}
 
 	@Override
 	public void comprobarAsiento(String numAsiento) {
-		// TODO Auto-generated method stub
-
+		
+		
+		Asiento aux; //Objeto asiento aux para la busqueda
+		boolean flag = false; //Por defecto false, se entiende que no esta reservado aun
+		for(int i = 0; i < asientos.size(); i++) {
+			aux = asientos.get(i);
+			if(aux.getNumAsiento().equals(numAsiento)) {
+				if(aux.isReservado() == true) { 
+					flag = true; //Si el asiento esta reservado, la flag pasa a true
+				}
+			}
+		}
+		
+		if(!flag) {
+			System.out.println("El asiento: "+numAsiento+", esta libre.");
+		}else {
+			System.out.println("El asiento: "+numAsiento+", esta ocupado.");
+		}
+		
 	}
 
 	@Override
-	public void reservarAsiento(String numAsiento, Persona comprador) {
-		// TODO Auto-generated method stub
-
+	public void reservarAsiento(String numAsiento, Persona comprador) throws AsientoException {
+		
+		Asiento cambio = new AsientoOcupado(numAsiento, comprador);
+		Asiento aux; //Objeto asiento aux para la busqueda
+		
+		int j = 0;
+		for (int i = 0; i < asientos.size(); i++) {
+			if(!asientos.get(i).getNumAsiento().equals(numAsiento.toUpperCase())) {
+				j++;
+			}
+		}
+		
+		if(j == 190) {
+			throw new AsientoException("Asiento introducido no valido");
+		}
+		
+		for(int i = 0; i < asientos.size(); i++) {
+			aux = asientos.get(i);
+			if(aux.getNumAsiento().equals(numAsiento)) {
+				if(aux.isReservado() != true) { 
+					asientos.set(i, cambio);
+				}
+			}
+		}
+		
+		
+		
 	}
 
 }
