@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Menu implements MainMenuInterface {
 
-	
+	Avion avion = new Avion();
 
 	@Override
 	public void iniciar() {	
@@ -126,6 +126,8 @@ public class Menu implements MainMenuInterface {
 			}
 		}
 		if(eleccion==3) {
+			System.out.println("introduzca asiento");
+			
 			comprobarAsiento();
 		}
 
@@ -138,6 +140,7 @@ public class Menu implements MainMenuInterface {
 
 	@Override
 	public void comprarEntrada() {
+String vuelo = scanner();
 
 		
 		
@@ -152,7 +155,8 @@ public class Menu implements MainMenuInterface {
 
 	@Override
 	public void comprobarAsiento() {
-
+		String asiento=scanner();
+		avion.comprobarAsiento(asiento);
 		
 		
 	}
@@ -160,6 +164,15 @@ public class Menu implements MainMenuInterface {
 	@Override
 	public void mostrarAsientos() {
 		// TODO Auto-generated method stub
+
+	}
+	public String scanner() {
+
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		String n = sc.nextLine();
+
+		return n;
 
 	}
 	public int scannerInt() {
@@ -171,4 +184,5 @@ public class Menu implements MainMenuInterface {
 		return n;
 
 	}
+
 }
