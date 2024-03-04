@@ -27,7 +27,7 @@ public interface AvionInterface {
 	 * @param numAsiento número del asiento (Ej: 23A)
 	 * @throws AsientoException si el número de asiento no es correcto
 	 * */
-	public void comprobarAsiento(String numAsiento);
+	public void comprobarAsiento(String numAsiento) throws AsientoException;
 	
 	
 	/**

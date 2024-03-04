@@ -2,7 +2,6 @@ package avion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class Avion implements AvionInterface {
 
@@ -53,45 +52,44 @@ public class Avion implements AvionInterface {
 
 	@Override
 	public void mostrarAvion() throws AvionException {
-		
+		//TODO
 		if(asientos == null) {
 			throw new AvionException("No se puede mostrar el avion, no hay ningun avion creado");
 		}
-		for(int i = 0; i<34; i++) {
-			System.out.print("  "+i+"");
-		}
-		System.out.println();
-		for(int i = 0;i<6;i++) {
-			
-			System.out.print(letraTurista.get(i)+"  ");
-			
-			for(int j = 1; j <=33;j++) {
-				if(asientos.get(i).reservado) {
-					System.out.print("[X]");
-				}else {
-					System.out.print("[✔]");
-				}
-			}
-			System.out.println();
-		}
+		
+		
 		
 	}
 
 	@Override
-	public void comprobarAsiento(String numAsiento) {
+	public void comprobarAsiento(String numAsiento) throws AsientoException {
 		
-		Asiento aux; //Objeto asiento aux para la busqueda
-		boolean flag = false; //Por defecto false, se entiende que no esta reservado aun
-		for(int i = 0; i < asientos.size(); i++) {
-			aux = asientos.get(i);
-			if(aux.getNumAsiento().equals(numAsiento)) {
-				if(aux.isReservado() == true) { 
-					flag = true; //Si el asiento esta reservado, la flag pasa a true
-				}
+		boolean flag = true;
+		for(int i = 0; i < asientos.size();i++) {
+			if(!numAsiento.toUpperCase().equals(asientos.get(i).getNumAsiento())) {
+				flag = false;
+			}else {
+				flag = true;
+				break;
 			}
 		}
 		
 		if(!flag) {
+			throw new AsientoException("Asiento no valido");
+		}
+		
+		Asiento aux; //Objeto asiento aux para la busqueda
+		boolean flagReservar = false; //Por defecto false, se entiende que no esta reservado aun
+		for(int i = 0; i < asientos.size(); i++) {
+			aux = asientos.get(i);
+			if(aux.getNumAsiento().equals(numAsiento)) {
+				if(aux.isReservado() == true) { 
+					flagReservar = true; //Si el asiento esta reservado, la flag pasa a true
+				}
+			}
+		}
+		
+		if(!flagReservar) {
 			System.out.println("El asiento: "+numAsiento+", esta libre.");
 		}else {
 			System.out.println("El asiento: "+numAsiento+", esta ocupado.");
@@ -103,27 +101,37 @@ public class Avion implements AvionInterface {
 	public void reservarAsiento(String numAsiento, Persona comprador) throws AsientoException {
 		
 		Asiento cambio = new AsientoOcupado(numAsiento, comprador);
-		Asiento aux; //Objeto asiento aux para la busqueda
 		
-		int j = 0;
-		for (int i = 0; i < asientos.size(); i++) {
-			if(!asientos.get(i).getNumAsiento().equals(numAsiento.toUpperCase())) {
-				j++;
+		boolean flag = true;
+		for(int i = 0; i < asientos.size();i++) {
+			if(!numAsiento.toUpperCase().equals(asientos.get(i).getNumAsiento())) {
+				flag = false;
+			}else {
+				flag = true;
+				break;
 			}
 		}
 		
-		if(j == 190) {
-			throw new AsientoException("Asiento introducido no valido");
+		if(!flag) {
+			throw new AsientoException("Asiento no valido");
 		}
 		
 		for(int i = 0; i < asientos.size(); i++) {
-			aux = asientos.get(i);
-			if(aux.getNumAsiento().equals(numAsiento)) {
-				if(aux.isReservado() != true) { 
+			if(numAsiento.toUpperCase().equals(asientos.get(i).getNumAsiento())) {
+				if(!asientos.get(i).isReservado()) {
+					
 					asientos.set(i, cambio);
+					return;
+					
+				}else {
+					
+					System.out.println("Asiento ocupado, ingrese otro distinto");
+					return;
+					
 				}
 			}
 		}
+		
 		
 		
 		
