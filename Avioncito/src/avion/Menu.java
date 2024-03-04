@@ -131,6 +131,14 @@ public class Menu implements MainMenuInterface {
 			comprobarAsiento();
 		}
 
+		if(eleccion==4) {
+			System.out.println("introduzca asiento");
+			
+			mostrarAsientos();
+		}
+		if(eleccion==5) {
+			return;
+		}
 
 
 		}
