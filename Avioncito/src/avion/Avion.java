@@ -64,18 +64,18 @@ public class Avion implements AvionInterface {
 	@Override
 	public void comprobarAsiento(String numAsiento) throws AsientoException {
 		
-		boolean flag = true;
+		boolean flag = true; //Por defecto el asiento esta disponible
 		for(int i = 0; i < asientos.size();i++) {
-			if(!numAsiento.toUpperCase().equals(asientos.get(i).getNumAsiento())) {
-				flag = false;
+			if(!numAsiento.toUpperCase().equals(asientos.get(i).getNumAsiento())) { //Si el asiento que se quiere comprobar no esta en la lista
+				flag = false; //flag pasa a false
 			}else {
-				flag = true;
+				flag = true; //flag vuelve a true en caso de encontrar el asiento 
 				break;
 			}
 		}
 		
 		if(!flag) {
-			throw new AsientoException("Asiento no valido");
+			throw new AsientoException("Asiento no valido"); //Si flag es false, da la excepcion
 		}
 		
 		Asiento aux; //Objeto asiento aux para la busqueda
@@ -131,9 +131,6 @@ public class Avion implements AvionInterface {
 				}
 			}
 		}
-		
-		
-		
 		
 	}
 
