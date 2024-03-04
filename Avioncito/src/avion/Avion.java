@@ -54,27 +54,53 @@ public class Avion implements AvionInterface {
 	@Override
 	public void mostrarAvion() throws AvionException {
 		
+		int variable = 0;
+		int tamaño = 33;
+		
 		if(asientos == null) {
 			throw new AvionException("No se puede mostrar el avion, no hay ningun avion creado");
 		}
-		for(int i = 0; i<34; i++) {
-			System.out.print("  "+i+"");
+		
+		for(int i = 0;i<3;i++) {
+			
+			System.out.print(letraTurista.get(i)+"  ");
+			
+			for(int j = variable; j <= tamaño;j++) {
+				if((i == 2 && j == 66 ) || (i == 2 && j == 67 ) || (i == 2 && j == 68 ) ||(i == 2 && j == 69 )) {
+					System.out.print("[⛔]");
+				}else {
+					if(asientos.get(j).reservado) {
+						System.out.print("[❌]");
+					}else {
+						System.out.print("[✔]");
+					}
+				}
+			}
+			System.out.println();
+			
+			variable += 33;
+			tamaño += 33;
 		}
+		
+		
+		System.out.print("    1");
+		
 		System.out.println();
-		for(int i = 0;i<6;i++) {
+		
+
+		/*for(int i = 3;i<6;i++) {
 			
 			System.out.print(letraTurista.get(i)+"  ");
 			
 			for(int j = 1; j <=33;j++) {
 				if(asientos.get(i).reservado) {
-					System.out.print("[X]");
+					System.out.print("[❌]");
 				}else {
 					System.out.print("[✔]");
 				}
 			}
 			System.out.println();
-		}
-		
+		}*/
 	}
 
 	@Override
