@@ -137,6 +137,7 @@ public class Menu implements MainMenuInterface {
 			mostrarAsientos();
 		}
 		if(eleccion==5) {
+			System.out.println("Gracias por utilizar nuestra compañia.");
 			return;
 		}
 
@@ -171,7 +172,7 @@ String vuelo = scanner();
 
 	@Override
 	public void mostrarAsientos() {
-		// TODO Auto-generated method stub
+		avion.mostrarAvion();
 
 	}
 	public String scanner() {
