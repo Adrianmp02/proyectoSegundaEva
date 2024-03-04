@@ -21,30 +21,25 @@ public class Menu implements MainMenuInterface {
 		str.append("||------------------------------||");
 		str.append("\n||                              ||");
 		str.append("\n");
-		str.append("|| 1 ► Billete Suelto");
-		 
-		str.append("           ||");
+		str.append("|| 1 ► Billete Suelto 🃏 ");			 
+		str.append("        ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
 		str.append("\n");
-		str.append("|| 2 ► Varios billetes");  
-		
-		str.append("          ||");
+		str.append("|| 2 ► Varios billetes 🃏🃏");  		
+		str.append("      ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
 		str.append("\n");
-		str.append("|| 3 ► Asiento libre/ocupado    ");  
-		
+		str.append("|| 3 ► Asiento libre/ocupado 👍/⛔");  		
 		str.append("||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
-		str.append("\n|| 4 ► Mostrar Asientos");  
-		
-		str.append("         ||");
+		str.append("\n|| 4 ► ✈️ Mostrar Asientos ✈️");  		
+		str.append("   ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
-		str.append("\n|| 5 ► Salir        ");  
-		
+		str.append("\n|| 5 ► Salir        ");  		
 		str.append("            ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
