@@ -11,7 +11,8 @@ public class MainHector {
 		a.crearAvion();
 		
 		a.reservarAsiento("1A", p);
-		a.reservarAsiento("2A", p);
+		a.reservarAsiento("4B", p);
+		a.reservarAsiento("5A", p);
 		
 		a.mostrarAvion();
 		

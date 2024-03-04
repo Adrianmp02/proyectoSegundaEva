@@ -6,47 +6,61 @@ import java.util.Iterator;
 
 public class Avion implements AvionInterface {
 
-	private ArrayList<Integer> fila;
+	private ArrayList<Integer> filaP;
+	private ArrayList<Integer> filaT;
 	private ArrayList<Character> letraTurista;
 	private ArrayList<Character> letraFirstClass;
-	private ArrayList<Asiento> asientos;
+	private ArrayList<Asiento> asientosPrimera;
+	private ArrayList<Asiento> asientosTurista;
 
 
 	@Override
 	public void crearAvion() throws AvionException {
 
-		if(asientos != null) {
+		if(asientosPrimera != null) {
+			throw new AvionException("Ya se encuentra un avion creado");
+		}
+		
+		if(asientosTurista != null) {
 			throw new AvionException("Ya se encuentra un avion creado");
 		}
 
-		fila = new ArrayList<Integer>();
+		filaP = new ArrayList<Integer>();
+		filaT = new ArrayList<Integer>();
 		letraTurista = new ArrayList<Character>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F'));
 		letraFirstClass = new ArrayList<Character>(Arrays.asList('A', 'B', 'E', 'F'));
+		asientosPrimera = new ArrayList<Asiento>();
+		asientosTurista = new ArrayList<Asiento>();
 
-		asientos = new ArrayList<Asiento>();
+		//Damos valor a la fila desde el numero 1 hasta el 4
+		for(int i = 1; i <= 4; i++) {
+			filaP.add(i);
+		}
 
-		//Damos valor a la fila desde el numero 1 hasta el 33
-		for(int i = 1; i <= 33; i++) {
-			fila.add(i);
+		//Damos valor a la fila desde el numero 5 hasta el 33
+		for(int i = 0; i <= 33; i++) {
+			filaT.add(i);
 		}
 
 		//Asigancion de asientos Primera Clase
-		for(int i = 0; i < 4; i++) {
-			for(int j = 0; j < letraFirstClass.size(); j++) {
-				Asiento aux = new AsientoLibre(""+fila.get(i)+letraFirstClass.get(j), 50.99);
+		for(int i = 0; i < letraFirstClass.size(); i++) {
+			for(int j = 0; j < 4; j++) {
+				Asiento aux = new AsientoLibre(""+filaP.get(j)+letraFirstClass.get(i), 50.99);
 
-				asientos.add(aux);
+				asientosPrimera.add(aux);
 			}
 		}
 
 		//Asignacion de asientos Turista
-		for(int i = 4; i < fila.size(); i++) {
-			for(int j = 0; j < letraTurista.size(); j++) {
-				Asiento aux = new AsientoLibre(""+fila.get(i)+letraTurista.get(j), 25.99);
+		for(int i = 0; i < letraTurista.size(); i++) {
+			for(int j = 5; j < filaT.size(); j++) {
+				Asiento aux = new AsientoLibre(""+filaT.get(j)+letraTurista.get(i), 25.99);
 
-				asientos.add(aux);
+				asientosTurista.add(aux);
 			}
 		}
+		
+		//System.out.println(asientosTurista);
 
 
 	}
@@ -57,10 +71,10 @@ public class Avion implements AvionInterface {
 		int variableP = 0;
 		int tamañoP = 3;
 
-		int variableT = 4;
+		int variableT = 0;
 		int tamañoT = 32;
 
-		if(asientos == null) {
+		if(asientosPrimera == null) {
 			throw new AvionException("No se puede mostrar el avion, no hay ningun avion creado");
 		}
 
@@ -68,7 +82,7 @@ public class Avion implements AvionInterface {
 
 		for(int j = variableP; j <= tamañoP; j++) {
 
-			if(asientos.get(j).reservado) {
+			if(asientosPrimera.get(j).reservado) {
 				System.out.print("[❌]");
 			}else {
 				System.out.print("[✔]");
@@ -80,44 +94,42 @@ public class Avion implements AvionInterface {
 
 		System.out.print(" A  ");
 
-		for(int j = variableT; j <= tamañoT;j++) {
+		for(int j = variableT; j <= tamañoT; j++) {
 
-			if(asientos.get(j).reservado) {
-
+			if(asientosTurista.get(j).reservado) {
 				System.out.print("[❌]");
 			}else {
 				System.out.print("[✔]");
 			}
 
 		}
+		
+		//-----------------------------------------------------------------------------------//
+		
+		variableP += 4;
+		tamañoP += 4;
+		
 		System.out.println();
-
-		variableP += 29;
-		tamañoP += 29;
-
 		System.out.print("B  ");
 
-		for(int j = variableP; j <= tamañoP;j++) {
+		for(int j = variableP; j <= tamañoP; j++) {
 
-			if(asientos.get(j).reservado) {
+			if(asientosPrimera.get(j).reservado) {
 				System.out.print("[❌]");
 			}else {
 				System.out.print("[✔]");
 			}
 
 		}
-		System.out.print(" |");
 
-		variableT += 29;
-		tamañoT += 29;
+		System.out.print(" |");
 
 		System.out.print(" B  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
 
+			if(asientosTurista.get(j).reservado) {
 
-
-			if(asientos.get(j).reservado) {
 				System.out.print("[❌]");
 			}else {
 				System.out.print("[✔]");
@@ -131,8 +143,8 @@ public class Avion implements AvionInterface {
 
 		Asiento aux; //Objeto asiento aux para la busqueda
 		boolean flag = false; //Por defecto false, se entiende que no esta reservado aun
-		for(int i = 0; i < asientos.size(); i++) {
-			aux = asientos.get(i);
+		for(int i = 0; i < asientosPrimera.size(); i++) {
+			aux = asientosPrimera.get(i);
 			if(aux.getNumAsiento().equals(numAsiento)) {
 				if(aux.isReservado() == true) { 
 					flag = true; //Si el asiento esta reservado, la flag pasa a true
@@ -155,8 +167,8 @@ public class Avion implements AvionInterface {
 		Asiento aux; //Objeto asiento aux para la busqueda
 
 		int j = 0;
-		for (int i = 0; i < asientos.size(); i++) {
-			if(!asientos.get(i).getNumAsiento().equals(numAsiento.toUpperCase())) {
+		for (int i = 0; i < asientosPrimera.size(); i++) {
+			if(!asientosPrimera.get(i).getNumAsiento().equals(numAsiento.toUpperCase())) {
 				j++;
 			}
 		}
@@ -165,11 +177,11 @@ public class Avion implements AvionInterface {
 			throw new AsientoException("Asiento introducido no valido");
 		}
 
-		for(int i = 0; i < asientos.size(); i++) {
-			aux = asientos.get(i);
+		for(int i = 0; i < asientosPrimera.size(); i++) {
+			aux = asientosPrimera.get(i);
 			if(aux.getNumAsiento().equals(numAsiento)) {
 				if(aux.isReservado() != true) { 
-					asientos.set(i, cambio);
+					asientosPrimera.set(i, cambio);
 				}
 			}
 		}
