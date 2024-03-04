@@ -20,7 +20,7 @@ public class Avion implements AvionInterface {
 		if(asientosPrimera != null) {
 			throw new AvionException("Ya se encuentra un avion creado");
 		}
-		
+
 		if(asientosTurista != null) {
 			throw new AvionException("Ya se encuentra un avion creado");
 		}
@@ -59,7 +59,7 @@ public class Avion implements AvionInterface {
 				asientosTurista.add(aux);
 			}
 		}
-		
+
 		//System.out.println(asientosTurista);
 
 
@@ -72,7 +72,7 @@ public class Avion implements AvionInterface {
 		int tamañoP = 3;
 
 		int variableT = 0;
-		int tamañoT = 32;
+		int tamañoT = 28;
 
 		if(asientosPrimera == null) {
 			throw new AvionException("No se puede mostrar el avion, no hay ningun avion creado");
@@ -103,12 +103,15 @@ public class Avion implements AvionInterface {
 			}
 
 		}
-		
+
 		//-----------------------------------------------------------------------------------//
-		
+
 		variableP += 4;
 		tamañoP += 4;
 		
+		variableT += 29;
+		tamañoT += 29;
+
 		System.out.println();
 		System.out.print("B  ");
 
@@ -166,6 +169,8 @@ public class Avion implements AvionInterface {
 		Asiento cambio = new AsientoOcupado(numAsiento, comprador);
 		Asiento aux; //Objeto asiento aux para la busqueda
 
+		boolean PoT = false;
+		
 		int j = 0;
 		for (int i = 0; i < asientosPrimera.size(); i++) {
 			if(!asientosPrimera.get(i).getNumAsiento().equals(numAsiento.toUpperCase())) {
@@ -177,17 +182,36 @@ public class Avion implements AvionInterface {
 			throw new AsientoException("Asiento introducido no valido");
 		}
 
-		for(int i = 0; i < asientosPrimera.size(); i++) {
-			aux = asientosPrimera.get(i);
-			if(aux.getNumAsiento().equals(numAsiento)) {
-				if(aux.isReservado() != true) { 
-					asientosPrimera.set(i, cambio);
-				}
+		String[] array = {"1A","2A","3A","4A","1B","2B","3B","4B","1E","2E","3E","4E","1F","2F","3F","4F"};
+
+		for (int i = 0; i < array.length; i++) {
+			if(numAsiento.equals(array[i])) {
+				PoT = true;
+				break;
 			}
 		}
 
+		if(PoT) {
 
+			for(int i = 0; i < asientosPrimera.size(); i++) {
+				aux = asientosPrimera.get(i);
+				if(aux.getNumAsiento().equals(numAsiento)) {
+					if(aux.isReservado() != true) { 
+						asientosPrimera.set(i, cambio);
+					}
+				}
+			}
+			
+		}else {
 
+			for(int i = 0; i < asientosTurista.size(); i++) {
+				aux = asientosTurista.get(i);
+				if(aux.getNumAsiento().equals(numAsiento)) {
+					if(aux.isReservado() != true) { 
+						asientosTurista.set(i, cambio);
+					}
+				}
+			}
+		}
 	}
-
 }

@@ -13,6 +13,8 @@ public class MainHector {
 		a.reservarAsiento("1A", p);
 		a.reservarAsiento("4B", p);
 		a.reservarAsiento("5A", p);
+		a.reservarAsiento("33A", p);
+		a.reservarAsiento("30B", p);
 		
 		a.mostrarAvion();
 		
