@@ -11,19 +11,23 @@ public interface MainMenuInterface {
 	
 	/**
 	 * Imprime el menú con las opciones
+	 * @throws AvionException 
+	 * @throws AsientoException 
 	 * */
-	public void iniciar();
+	public void iniciar() throws AvionException, AsientoException;
 	
 	
 	/**
 	 * Inicia el proceso de compra de una entrada
+	 * @throws AsientoException 
 	 * */
-	public void comprarEntrada();
+	public void comprarEntrada() throws AsientoException;
 	
 	/**
 	 * Inicia el proceso de compra de varias entradas de golpe
+	 * @throws AsientoException 
 	 * */
-	public void comprarEntradas();
+	public void comprarEntradas() throws AsientoException;
 	
 	/**
 	 * Comprueba la disponibilidad de un asiento
@@ -32,8 +36,9 @@ public interface MainMenuInterface {
 	
 	/**
 	 * Muestra un diagrama de los asientos.
+	 * @throws AvionException 
 	 * */
-	public void mostrarAsientos();
+	public void mostrarAsientos() throws AvionException;
 	
 	
 	
