@@ -2,6 +2,7 @@ package avion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class Avion implements AvionInterface {
 
@@ -56,16 +57,28 @@ public class Avion implements AvionInterface {
 		if(asientos == null) {
 			throw new AvionException("No se puede mostrar el avion, no hay ningun avion creado");
 		}
-		//Recorremos la lista sacando por pantalla los asientos
-		for(int i = 0; i < asientos.size(); i++) {
-			System.out.println(asientos.get(i));
+		for(int i = 0; i<34; i++) {
+			System.out.print("  "+i+"");
+		}
+		System.out.println();
+		for(int i = 0;i<6;i++) {
+			
+			System.out.print(letraTurista.get(i)+"  ");
+			
+			for(int j = 1; j <=33;j++) {
+				if(asientos.get(i).reservado) {
+					System.out.print("[X]");
+				}else {
+					System.out.print("[✔]");
+				}
+			}
+			System.out.println();
 		}
 		
 	}
 
 	@Override
 	public void comprobarAsiento(String numAsiento) {
-		
 		
 		Asiento aux; //Objeto asiento aux para la busqueda
 		boolean flag = false; //Por defecto false, se entiende que no esta reservado aun
