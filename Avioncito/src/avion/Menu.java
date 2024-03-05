@@ -10,7 +10,7 @@ public class Menu implements MainMenuInterface {
 	Avion avion = new Avion();
 
 	@Override
-	public void iniciar() {	
+	public void iniciar() throws AvionException, AsientoException {	
 
 		StringBuffer str = new StringBuffer();
 
@@ -21,31 +21,26 @@ public class Menu implements MainMenuInterface {
 		str.append("||------------------------------||");
 		str.append("\n||                              ||");
 		str.append("\n");
-		str.append("|| 1 ► Billete Suelto");
-		 
-		str.append("           ||");
+		str.append("|| 1 ► Billete Suelto ┊🃏 ");			 
+		str.append("      ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
 		str.append("\n");
-		str.append("|| 2 ► Varios billetes");  
-		
-		str.append("          ||");
+		str.append("|| 2 ► Varios billetes 🃏┊🃏");  		
+		str.append("     ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
 		str.append("\n");
-		str.append("|| 3 ► Asiento libre/ocupado    ");  
-		
+		str.append("|| 3 ► Asiento 👍libre/ocupado⛔ ");  		
 		str.append("||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
-		str.append("\n|| 4 ► Ubicación Asiento");  
-		
-		str.append("        ||");
+		str.append("\n|| 4 ► ✈️ Mostrar Asientos ✈️");  		
+		str.append("    ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
-		str.append("\n|| 5 ► Salir        ");  
-		
-		str.append("            ||");
+		str.append("\n|| 5 ► Salir 👋    ");  		
+		str.append("             ||");
 		str.append("\n||                              ||");
 		str.append("\n||                              ||");
 		str.append("\n°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
@@ -132,11 +127,12 @@ public class Menu implements MainMenuInterface {
 		}
 
 		if(eleccion==4) {
-			System.out.println("introduzca asiento");
+			
 			
 			mostrarAsientos();
 		}
 		if(eleccion==5) {
+			System.out.println("Gracias por utilizar nuestra compañia.");
 			return;
 		}
 
@@ -147,16 +143,18 @@ public class Menu implements MainMenuInterface {
 
 
 	@Override
-	public void comprarEntrada() {
+	public void comprarEntrada() throws AsientoException {
 String vuelo = scanner();
+avion.reservarAsiento(vuelo, null);
 
 		
 		
 	}
 
 	@Override
-	public void comprarEntradas() {
-
+	public void comprarEntradas() throws AsientoException {
+		String vuelos = scanner();
+		avion.reservarAsiento(vuelos, null);
 		
 		
 	}
@@ -170,8 +168,8 @@ String vuelo = scanner();
 	}
 
 	@Override
-	public void mostrarAsientos() {
-		// TODO Auto-generated method stub
+	public void mostrarAsientos() throws AvionException {
+		avion.mostrarAvion();
 
 	}
 	public String scanner() {
