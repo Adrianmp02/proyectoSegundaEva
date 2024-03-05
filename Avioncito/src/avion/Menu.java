@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Menu implements MainMenuInterface {
 
 	Avion avion = new Avion();
+	Persona p= new Persona ("7114554A","hector","garcia",13);
 
 	@Override
 	public void iniciar() throws AvionException, AsientoException {	
@@ -145,7 +146,7 @@ public class Menu implements MainMenuInterface {
 	@Override
 	public void comprarEntrada() throws AsientoException {
 String vuelo = scanner();
-avion.reservarAsiento(vuelo, null);
+avion.reservarAsiento(vuelo,p);
 
 		
 		
@@ -154,7 +155,7 @@ avion.reservarAsiento(vuelo, null);
 	@Override
 	public void comprarEntradas() throws AsientoException {
 		String vuelos = scanner();
-		avion.reservarAsiento(vuelos, null);
+		avion.reservarAsiento(vuelos, p);
 		
 		
 	}
