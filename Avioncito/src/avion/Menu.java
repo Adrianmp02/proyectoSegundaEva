@@ -1,196 +1,263 @@
 package avion;
-
-import java.time.LocalDate;
+ 
+import java.util.Iterator;
 import java.util.Scanner;
-
-
-
+ 
 public class Menu implements MainMenuInterface {
-
-	Avion avion = new Avion();
-
+ 
+	public static void main(String[] args) throws AvionException, AsientoException {
+ 
+		Menu menu = new Menu();
+ 
+		menu.iniciar();
+	}
+ 
+	Avion s = new Avion();
+ 
 	@Override
 	public void iniciar() throws AvionException, AsientoException {	
-
-		StringBuffer str = new StringBuffer();
-
-		str.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-		str.append("\n||                              ||");
-		str.append("\n||      ELIJA UNA OPCIÒN:       ||");
-		str.append("\n");
-		str.append("||------------------------------||");
-		str.append("\n||                              ||");
-		str.append("\n");
-		str.append("|| 1 ► Billete Suelto ┊🃏 ");			 
-		str.append("      ||");
-		str.append("\n||                              ||");
-		str.append("\n||                              ||");
-		str.append("\n");
-		str.append("|| 2 ► Varios billetes 🃏┊🃏");  		
-		str.append("     ||");
-		str.append("\n||                              ||");
-		str.append("\n||                              ||");
-		str.append("\n");
-		str.append("|| 3 ► Asiento 👍libre/ocupado⛔ ");  		
-		str.append("||");
-		str.append("\n||                              ||");
-		str.append("\n||                              ||");
-		str.append("\n|| 4 ► ✈️ Mostrar Asientos ✈️");  		
-		str.append("    ||");
-		str.append("\n||                              ||");
-		str.append("\n||                              ||");
-		str.append("\n|| 5 ► Salir 👋    ");  		
-		str.append("             ||");
-		str.append("\n||                              ||");
-		str.append("\n||                              ||");
-		str.append("\n°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-		
-		System.out.println(str.toString());
-		int eleccion= scannerInt();
-		if(eleccion==1) {
-			StringBuffer str1 = new StringBuffer();
-
-			str1.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-			str1.append("\n||                       ||");
-			str1.append("\n||   TIPO DE ASIENTO:    ||");
-			str1.append("\n");
-			str1.append("||-----------------------||");
-			str1.append("\n||                       ||");
-			str1.append("\n");
-			str1.append("|| 1 ► Primera Clase");
-			
-			str1.append("     ||");
-			str1.append("\n||                       ||");
-			str1.append("\n||                       ||");
-			str1.append("\n");
-			str1.append("|| 2 ► Clase Turista");  
-			
-			str1.append("     ||");
-			str1.append("\n||                       ||");
-			str1.append("\n||                       ||");
-			str1.append("\n");
-			str1.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-			System.out.println(str1.toString());
-
-			int eleccion11 = scannerInt();
-			if (eleccion11 ==1) {
-				comprarEntrada();
+ 
+ 
+		s.crearAvion();
+		int eleccionOpcion;
+ 
+		do {
+			StringBuffer str = new StringBuffer();
+ 
+			str.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
+			str.append("\n||                              ||");
+			str.append("\n||      ELIJA UNA OPCIÒN:       ||");
+			str.append("\n");
+			str.append("||------------------------------||");
+			str.append("\n||                              ||");
+			str.append("\n");
+			str.append("|| 1 ► Billete Suelto ┊🃏 ");			 
+			str.append("      ||");
+			str.append("\n||                              ||");
+			str.append("\n||                              ||");
+			str.append("\n");
+			str.append("|| 2 ► Varios billetes 🃏┊🃏");  		
+			str.append("     ||");
+			str.append("\n||                              ||");
+			str.append("\n||                              ||");
+			str.append("\n");
+			str.append("|| 3 ► Asiento 👍libre/ocupado⛔ ");  		
+			str.append("||");
+			str.append("\n||                              ||");
+			str.append("\n||                              ||");
+			str.append("\n|| 4 ► ✈️ Mostrar Asientos ✈️");  		
+			str.append("    ||");
+			str.append("\n||                              ||");
+			str.append("\n||                              ||");
+			str.append("\n|| 5 ► Salir 👋    ");  		
+			str.append("             ||");
+			str.append("\n||                              ||");
+			str.append("\n||                              ||");
+			str.append("\n°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
+ 
+			System.out.println(str.toString());
+ 
+			eleccionOpcion = scannerInt();
+ 
+			if(eleccionOpcion == 1 || eleccionOpcion == 2) {
+ 
+				if(eleccionOpcion == 1) {
+ 
+					comprarEntrada();
+ 
+				}
+ 
+				else if(eleccionOpcion == 2) {
+ 
+					comprarEntradas();
+ 
+				}
+ 
 			}
-			if (eleccion11 ==2) {
-				comprarEntradas();
+ 
+			if(eleccionOpcion == 3) {
+ 
 			}
-			else {
-				System.out.println("elija otra opción. La opción elegida no existe.");
+ 
+			if(eleccionOpcion == 4) {
+				s.mostrarAvion();
 			}
 		}
-		if(eleccion==2) {
-			
-			StringBuffer str1 = new StringBuffer();
-
-			str1.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-			str1.append("\n||                       ||");
-			str1.append("\n||   TIPO DE ASIENTO:    ||");
-			str1.append("\n");
-			str1.append("||-----------------------||");
-			str1.append("\n||                       ||");
-			str1.append("\n");
-			str1.append("|| 1 ► Primera Clase");
-			
-			str1.append("     ||");
-			str1.append("\n||                       ||");
-			str1.append("\n||                       ||");
-			str1.append("\n");
-			str1.append("|| 2 ► Clase Turista");  
-			
-			str1.append("     ||");
-			str1.append("\n||                       ||");
-			str1.append("\n||                       ||");
-			str1.append("\n");
-			str1.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-			System.out.println(str1.toString());
-
-			int eleccion12 = scannerInt();
-			if (eleccion12 ==1) {
-				comprarEntrada();
-			}
-			if (eleccion12 ==2) {
-				comprarEntradas();
-			}
-			else {
-				System.out.println("elija otra opción. La opción elegida no existe.");
-			}
-		}
-		if(eleccion==3) {
-			System.out.println("introduzca asiento");
-			
-			comprobarAsiento();
-		}
-
-		if(eleccion==4) {
-			
-			
-			mostrarAsientos();
-		}
-		if(eleccion==5) {
-			System.out.println("Gracias por utilizar nuestra compañia.");
-			return;
-		}
-
-
-		}
-	
-
-
-
+		while(eleccionOpcion != 5);
+ 
+	}
+ 
+ 
+ 
 	@Override
 	public void comprarEntrada() throws AsientoException {
-String vuelo = scanner();
-avion.reservarAsiento(vuelo, null);
-
-		
-		
+ 
+		System.out.println("Estos son los asientos disponibles de primera clase ->");
+ 
+		int separadorPrimera = 0;
+ 
+		for (int i = 0; i < s.asientosPrimera.size(); i++) {
+ 
+			if(separadorPrimera == 4) {
+				System.out.println();
+				separadorPrimera = 0;
+			}
+ 
+			if(!s.asientosPrimera.get(i).reservado) {
+				System.out.print(s.asientosPrimera.get(i).numAsiento + " | ");
+				separadorPrimera++;
+			}
+ 
+		}
+ 
+		System.out.println();
+ 
+		System.out.println("Estos son los asientos disponibles de clase turista ->");
+ 
+		int separadorTurista = 0;
+ 
+		for (int i = 0; i < s.asientosTurista.size(); i++) {
+ 
+			if(separadorTurista == 29) {
+				System.out.println();
+				separadorTurista = 0;
+			}
+ 
+			if(!s.asientosTurista.get(i).reservado) {
+				System.out.print(s.asientosTurista.get(i).numAsiento + " | ");
+				separadorTurista++;
+			}
+ 
+		}
+ 
+		System.out.println();
+ 
+		System.out.println("Dime el asiento que quieres reservar.");
+		String vuelo = scannerString().toUpperCase();
+		System.out.println("Dime tus datos: ");
+		System.out.println("DNI: ");
+		String dni = scannerString();
+		System.out.println("Nombre: ");
+		String nombre = scannerString();
+		System.out.println("Apellido: ");
+		String apellido = scannerString();
+		System.out.println("Edad: ");
+		int edad = scannerInt();
+		Persona p = new Persona(dni, nombre, apellido, edad);
+		s.reservarAsiento(vuelo, p);
+		System.out.println("De parte de David, te agradecemos la compra");
+ 
+ 
 	}
-
+ 
 	@Override
 	public void comprarEntradas() throws AsientoException {
-		String vuelos = scanner();
-		avion.reservarAsiento(vuelos, null);
-		
-		
+ 
+		System.out.println("¿Cuantas billetes quieres?");
+		int numDeBilletes = scannerInt();
+		String vuelos = "";
+ 
+		if(numDeBilletes < 1) {
+			System.out.println("Usted es imbecil, introduzca un numero valido, y deje de hacernos perder el tiempo");
+			numDeBilletes = scannerInt();
+		}
+		if(numDeBilletes == 1) {
+			System.out.println("Usted es imbecil, para la proxima elija la opcion uno en el menu anterior");
+			comprarEntrada();
+		}
+		if(numDeBilletes > 1) {
+ 
+ 
+			System.out.println("Dime tus datos: ");
+			System.out.println("DNI: ");
+			String dni = scannerString();
+			System.out.println("Nombre: ");
+			String nombre = scannerString();
+			System.out.println("Apellido: ");
+			String apellido = scannerString();
+			System.out.println("Edad: ");
+			int edad = scannerInt();
+			Persona p = new Persona(dni, nombre, apellido, edad);
+ 
+			System.out.println("Opcion 1-> Primera clase \nOpcion 2-> Clase turista");
+			int numOpcion = scannerInt();
+ 
+			int disponibles = 0;
+ 
+			if(numOpcion == 1) {
+ 
+				for (int i = 0; i < s.asientosPrimera.size(); i++) {
+					if(!s.asientosPrimera.get(i).reservado) {
+						disponibles++;
+					}
+				}
+ 
+ 
+				if(disponibles <= numDeBilletes) {
+ 
+					int comprados = 0;
+ 
+					if(numDeBilletes%2 == 0) {
+						for (int i = 0; i < s.asientosPrimera.size(); i+=2) {
+							if(comprados != numDeBilletes) {
+								if(!s.asientosPrimera.get(i).reservado && !s.asientosPrimera.get(i+1).reservado) {
+									s.reservarAsiento(s.asientosPrimera.get(i).numAsiento, p);
+									s.reservarAsiento(s.asientosPrimera.get(i+1).numAsiento, p);
+									comprados+=2;
+								}
+							}
+						}
+					}
+				}
+			}
+ 
+			for (int i = 0; i < s.avionAsientos.size(); i++) {
+ 
+			}
+ 
+			for (int i = 1; i < numDeBilletes; i++) {
+ 
+ 
+ 
+ 
+				s.reservarAsiento(vuelos, p);
+			}
+		}
 	}
-
+ 
 	@Override
-	public void comprobarAsiento() {
-		String asiento=scanner();
-		avion.comprobarAsiento(asiento);
-		
-		
+	public void comprobarAsiento() throws AsientoException {
+ 
+		String asiento=scannerString();
+		s.comprobarAsiento(asiento);
+ 
 	}
-
+ 
 	@Override
 	public void mostrarAsientos() throws AvionException {
-		avion.mostrarAvion();
-
+ 
+		s.mostrarAvion();
+ 
 	}
-	public String scanner() {
-
+ 
+	//NO tocar
+	public String scannerString() {
+ 
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		String n = sc.nextLine();
-
+ 
 		return n;
-
+ 
 	}
 	public int scannerInt() {
-
+ 
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
-
+ 
 		return n;
-
+ 
 	}
-	
-	
-
+ 
 }
