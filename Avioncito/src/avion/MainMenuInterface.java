@@ -31,8 +31,9 @@ public interface MainMenuInterface {
 	
 	/**
 	 * Comprueba la disponibilidad de un asiento
+	 * @throws AsientoException 
 	 * */
-	public void comprobarAsiento();
+	public void comprobarAsiento() throws AsientoException;
 	
 	/**
 	 * Muestra un diagrama de los asientos.
