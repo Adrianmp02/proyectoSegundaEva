@@ -9,6 +9,8 @@ public class Menu implements MainMenuInterface {
 		Menu menu = new Menu();
 
 		menu.iniciar();
+		
+		
 	}
 
 	Avion s = new Avion();
@@ -91,79 +93,7 @@ public class Menu implements MainMenuInterface {
 	@Override
 	public void comprarEntrada() throws AsientoException {
 
-		System.out.println("Estos son los asientos disponibles de primera clase ->");
-
-		int separadorPrimera = 0;
-
-		//Muestra los asientos disponible de primera clase
-		for (int i = 0; i < s.asientosPrimera.size(); i++) {
-
-			if(separadorPrimera == 4) {
-				System.out.println();
-				separadorPrimera = 0;
-			}
-
-			if(!s.avionAsientos.get(i).isReservado()) {
-				System.out.print(s.avionAsientos.get(i).numAsiento + " | ");
-				separadorPrimera++;
-			}
-
-		}
-
-		System.out.println();
-
-		System.out.println("Estos son los asientos disponibles de clase turista ->");
-
-		int separadorTurista = 0;
-
-		//Muestra los asientos de clase turista
-		for (int i = 16; i < s.avionAsientos.size(); i++) {
-
-			if(separadorTurista == 29) {
-				System.out.println();
-				separadorTurista = 0;
-			}
-
-			if(!s.avionAsientos.get(i).isReservado()) {
-				System.out.print(s.avionAsientos.get(i).numAsiento + " | ");
-				separadorTurista++;
-			}
-
-		}
-
-		System.out.println();
-
-		System.out.println("Dime el asiento que quieres reservar.");
-		
-		String vuelo = scannerString().toUpperCase();
-		
-		boolean comp = true; //Flag, por defecto true ya que suponemos que el asiento es correcto
-		for(int excp = 0; excp < s.avionAsientos.size(); excp++) {
-			if(!vuelo.equals(s.avionAsientos.get(excp).getNumAsiento())) {
-				comp = false; //Si el asiento introducido no corresponde con ninguno la flag pasa a false
-			}else {
-				comp = true; //Si alguno coincide pasa a true y sale del bucle
-				break;
-			}
-		}
-		
-		//Si la flag es false, lanza excepcion
-		if(!comp) {
-			throw new AsientoException("El asiento que quieres reservar no esta en el rango informado");
-		}
-		
-		Persona p = Persona.crearPersona();
-		
-		Asiento cambio = new AsientoOcupado(vuelo, p);
-		
-		for(int j = 0; j < s.avionAsientos.size(); j++) {
-			if(vuelo.equals(s.avionAsientos.get(j).getNumAsiento())) {
-				s.avionAsientos.set(j, cambio);
-			}
-		}
-		
-		System.out.println("De parte de David, te agradecemos la compra");
-
+		s.comprarBillete();
 
 	}
 
@@ -177,14 +107,12 @@ public class Menu implements MainMenuInterface {
 		//Elegir cantidad del numero de billetes comprados
 
 		if(numDeBilletes < 1) {
-			System.out.println("Por favor introduzca un numero valido");
-			comprarEntradas();
+			throw new AsientoException("El numero de billetes comprados no puede ser inferior a 1");
 		}
 		if(numDeBilletes == 1) {
-			comprarEntrada();
+			comprarEntrada();  //Si solo quiere comprar una entrada se lanza el metodo para comprar una entrada unica
 		}
 		if(numDeBilletes > 1) {
-
 
 			Persona p = Persona.crearPersona();
 
@@ -198,9 +126,8 @@ public class Menu implements MainMenuInterface {
 			if(numOpcion == 1) {
 
 				//cuenta los asientos disponbles
-
-				for (int i = 0; i < s.asientosPrimera.size(); i++) {
-					if(!s.asientosPrimera.get(i).reservado) {
+				for (int i = 0; i < s.avionAsientos.size(); i++) {
+					if(!s.avionAsientos.get(i).reservado) {
 						disponibles++;
 					}
 				}
@@ -211,8 +138,8 @@ public class Menu implements MainMenuInterface {
 					int comprobar = 0;
 					int i = 0;
 
-					while(comprobar != numDeBilletes && i > s.asientosPrimera.size()) {
-						if(!s.asientosPrimera.get(i).reservado) {
+					while(comprobar != numDeBilletes && i > s.avionAsientos.size()) {
+						if(!s.avionAsientos.get(i).reservado) {
 							comprobar++;
 						}else {
 							comprobar = 0;
@@ -221,7 +148,7 @@ public class Menu implements MainMenuInterface {
 					}
 
 					for (int j = i-numDeBilletes; j < numDeBilletes+i; j++) {
-						s.reservarAsiento(s.asientosPrimera.get(j).numAsiento, p);
+						s.reservarAsiento(s.avionAsientos.get(j).numAsiento, p);
 					}
 
 

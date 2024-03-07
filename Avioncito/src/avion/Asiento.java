@@ -8,6 +8,8 @@ public class Asiento {
 	public Asiento(String num) {
 		this.reservado = false;
 		this.numAsiento = num;
+		
+		
 	}
 
 	public boolean isReservado() {
@@ -25,6 +27,7 @@ public class Asiento {
 	public void setNumAsiento(String numAsiento) {
 		this.numAsiento = numAsiento;
 	}
+	
 	
 	
 	
