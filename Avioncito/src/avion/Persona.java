@@ -1,5 +1,7 @@
 package avion;
 
+import java.util.Scanner;
+
 public class Persona {
 	
 	private String dni;
@@ -47,4 +49,45 @@ public class Persona {
 
 		return str.toString();
 	}
+	
+	
+	
+	public static Persona crearPersona() {
+		
+		System.out.println("Dime tus datos: ");
+		System.out.println("DNI: ");
+		String dni = scannerString();
+		System.out.println("Nombre: ");
+		String nombre = scannerString();
+		System.out.println("Apellido: ");
+		String apellido = scannerString();
+		System.out.println("Edad: ");
+		int edad = scannerInt();
+		Persona p = new Persona(dni, nombre, apellido, edad);
+		
+		return p;
+	}
+	
+	
+	
+	
+	//NO tocar
+		public static String scannerString() {
+
+			@SuppressWarnings("resource")
+			Scanner sc = new Scanner(System.in);
+			String n = sc.nextLine();
+
+			return n;
+
+		}
+		public static int scannerInt() {
+
+			@SuppressWarnings("resource")
+			Scanner sc = new Scanner(System.in);
+			int n = sc.nextInt();
+
+			return n;
+
+		}
 }

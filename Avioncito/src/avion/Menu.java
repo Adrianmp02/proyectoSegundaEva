@@ -1,6 +1,5 @@
 package avion;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Menu implements MainMenuInterface {
@@ -96,6 +95,7 @@ public class Menu implements MainMenuInterface {
 
 		int separadorPrimera = 0;
 
+		//Muestra los asientos disponible de primera clase
 		for (int i = 0; i < s.asientosPrimera.size(); i++) {
 
 			if(separadorPrimera == 4) {
@@ -103,8 +103,8 @@ public class Menu implements MainMenuInterface {
 				separadorPrimera = 0;
 			}
 
-			if(!s.asientosPrimera.get(i).reservado) {
-				System.out.print(s.asientosPrimera.get(i).numAsiento + " | ");
+			if(!s.avionAsientos.get(i).isReservado()) {
+				System.out.print(s.avionAsientos.get(i).numAsiento + " | ");
 				separadorPrimera++;
 			}
 
@@ -116,15 +116,16 @@ public class Menu implements MainMenuInterface {
 
 		int separadorTurista = 0;
 
-		for (int i = 0; i < s.asientosTurista.size(); i++) {
+		//Muestra los asientos de clase turista
+		for (int i = 16; i < s.avionAsientos.size(); i++) {
 
 			if(separadorTurista == 29) {
 				System.out.println();
 				separadorTurista = 0;
 			}
 
-			if(!s.asientosTurista.get(i).reservado) {
-				System.out.print(s.asientosTurista.get(i).numAsiento + " | ");
+			if(!s.avionAsientos.get(i).isReservado()) {
+				System.out.print(s.avionAsientos.get(i).numAsiento + " | ");
 				separadorTurista++;
 			}
 
@@ -133,18 +134,34 @@ public class Menu implements MainMenuInterface {
 		System.out.println();
 
 		System.out.println("Dime el asiento que quieres reservar.");
+		
 		String vuelo = scannerString().toUpperCase();
-		System.out.println("Dime tus datos: ");
-		System.out.println("DNI: ");
-		String dni = scannerString();
-		System.out.println("Nombre: ");
-		String nombre = scannerString();
-		System.out.println("Apellido: ");
-		String apellido = scannerString();
-		System.out.println("Edad: ");
-		int edad = scannerInt();
-		Persona p = new Persona(dni, nombre, apellido, edad);
-		s.reservarAsiento(vuelo, p);
+		
+		boolean comp = true; //Flag, por defecto true ya que suponemos que el asiento es correcto
+		for(int excp = 0; excp < s.avionAsientos.size(); excp++) {
+			if(!vuelo.equals(s.avionAsientos.get(excp).getNumAsiento())) {
+				comp = false; //Si el asiento introducido no corresponde con ninguno la flag pasa a false
+			}else {
+				comp = true; //Si alguno coincide pasa a true y sale del bucle
+				break;
+			}
+		}
+		
+		//Si la flag es false, lanza excepcion
+		if(!comp) {
+			throw new AsientoException("El asiento que quieres reservar no esta en el rango informado");
+		}
+		
+		Persona p = Persona.crearPersona();
+		
+		Asiento cambio = new AsientoOcupado(vuelo, p);
+		
+		for(int j = 0; j < s.avionAsientos.size(); j++) {
+			if(vuelo.equals(s.avionAsientos.get(j).getNumAsiento())) {
+				s.avionAsientos.set(j, cambio);
+			}
+		}
+		
 		System.out.println("De parte de David, te agradecemos la compra");
 
 
@@ -160,26 +177,16 @@ public class Menu implements MainMenuInterface {
 		//Elegir cantidad del numero de billetes comprados
 
 		if(numDeBilletes < 1) {
-			System.out.println("Usted es imbecil, introduzca un numero valido, y deje de hacernos perder el tiempo");   //Adrian no ha tenido nada que ver
+			System.out.println("Por favor introduzca un numero valido");
 			comprarEntradas();
 		}
 		if(numDeBilletes == 1) {
-			System.out.println("Usted es imbecil, para la proxima elija la opcion uno en el menu anterior");
 			comprarEntrada();
 		}
 		if(numDeBilletes > 1) {
 
 
-			System.out.println("Dime tus datos: ");
-			System.out.println("DNI: ");
-			String dni = scannerString();
-			System.out.println("Nombre: ");
-			String nombre = scannerString();
-			System.out.println("Apellido: ");
-			String apellido = scannerString();
-			System.out.println("Edad: ");
-			int edad = scannerInt();
-			Persona p = new Persona(dni, nombre, apellido, edad);
+			Persona p = Persona.crearPersona();
 
 			//Elegir primera clase o clase turista
 
@@ -228,10 +235,6 @@ public class Menu implements MainMenuInterface {
 
 		for (int i = 1; i < numDeBilletes; i++) {
 
-
-
-
-
 		}
 	}
 
@@ -251,6 +254,45 @@ public class Menu implements MainMenuInterface {
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//NO tocar
 	public String scannerString() {
 

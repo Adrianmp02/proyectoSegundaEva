@@ -123,7 +123,7 @@ public class Avion implements AvionInterface {
 
 		int tamañoT = 28;
  
-		if(asientosPrimera == null) {
+		if(avionAsientos == null) {
 
 			throw new AvionException("No se puede mostrar el avion, no hay ningun avion creado");
 
@@ -133,7 +133,7 @@ public class Avion implements AvionInterface {
  
 		for(int j = variableP; j <= tamañoP; j++) {
  
-			if(asientosPrimera.get(j).reservado) {
+			if(avionAsientos.get(j).reservado) {
 
 				System.out.print("[❌]");
 
@@ -151,7 +151,7 @@ public class Avion implements AvionInterface {
  
 		for(int j = variableT; j <= tamañoT; j++) {
  
-			if(asientosTurista.get(j).reservado) {
+			if(avionAsientos.get(j).reservado) {
 
 				System.out.print("[❌]");
 
@@ -179,7 +179,7 @@ public class Avion implements AvionInterface {
  
 		for(int j = variableP; j <= tamañoP; j++) {
  
-			if(asientosPrimera.get(j).reservado) {
+			if(avionAsientos.get(j).reservado) {
 
 				System.out.print("[❌]");
 
@@ -197,7 +197,7 @@ public class Avion implements AvionInterface {
  
 		for(int j = variableT; j <= tamañoT;j++) {
  
-			if(asientosTurista.get(j).reservado) {
+			if(avionAsientos.get(j).reservado) {
  
 				System.out.print("[❌]");
 
