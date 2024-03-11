@@ -17,17 +17,6 @@ public class AsientoLibre extends Asiento {
 		this.precio = precio;
 	}
 
-	public String toString() {
-
-		StringBuffer str = new StringBuffer();
-
-		str.append("Asiento: "+numAsiento);
-		str.append("\n");
-		str.append("Precio: "+precio+" €");
-		str.append("\n");
-		str.append("----------------------------------------------");
-
-		return str.toString();
-	}
+	
 
 }

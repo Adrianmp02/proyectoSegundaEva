@@ -28,7 +28,17 @@ public class Asiento {
 		this.numAsiento = numAsiento;
 	}
 	
-	
+	public String toString() {
+		
+		StringBuffer str = new StringBuffer();
+		if(this.reservado) {
+			str.append("[❌]");
+		}else {
+			str.append("[✔]");
+		}
+		
+		return str.toString();
+	}
 	
 	
 }

@@ -3,6 +3,11 @@ package avion;
 import java.util.Scanner;
 
 public class Menu implements MainMenuInterface {
+	
+	
+	Avion s = new Avion();
+	
+	
 
 	public static void main(String[] args) throws AvionException, AsientoException {
 
@@ -13,7 +18,7 @@ public class Menu implements MainMenuInterface {
 		
 	}
 
-	Avion s = new Avion();
+
 
 	@Override
 	public void iniciar() throws AvionException, AsientoException {	
@@ -99,70 +104,8 @@ public class Menu implements MainMenuInterface {
 
 	@Override
 	public void comprarEntradas() throws AsientoException {
-
-		System.out.println("¿Cuantas billetes quieres?");
-		int numDeBilletes = scannerInt();
-		String vuelos = "";
-
-		//Elegir cantidad del numero de billetes comprados
-
-		if(numDeBilletes < 1) {
-			throw new AsientoException("El numero de billetes comprados no puede ser inferior a 1");
-		}
-		if(numDeBilletes == 1) {
-			comprarEntrada();  //Si solo quiere comprar una entrada se lanza el metodo para comprar una entrada unica
-		}
-		if(numDeBilletes > 1) {
-
-			Persona p = Persona.crearPersona();
-
-			//Elegir primera clase o clase turista
-
-			System.out.println("Opcion 1-> Primera clase \nOpcion 2-> Clase turista");
-			int numOpcion = scannerInt();
-
-			int disponibles = 0;
-
-			if(numOpcion == 1) {
-
-				//cuenta los asientos disponbles
-				for (int i = 0; i < s.avionAsientos.size(); i++) {
-					if(!s.avionAsientos.get(i).reservado) {
-						disponibles++;
-					}
-				}
-
-
-				if(disponibles <= numDeBilletes) {
-
-					int comprobar = 0;
-					int i = 0;
-
-					while(comprobar != numDeBilletes && i > s.avionAsientos.size()) {
-						if(!s.avionAsientos.get(i).reservado) {
-							comprobar++;
-						}else {
-							comprobar = 0;
-						}
-						i++;
-					}
-
-					for (int j = i-numDeBilletes; j < numDeBilletes+i; j++) {
-						s.reservarAsiento(s.avionAsientos.get(j).numAsiento, p);
-					}
-
-
-				}
-			}
-		}
-
-		for (int i = 0; i < s.avionAsientos.size(); i++) {
-
-		}
-
-		for (int i = 1; i < numDeBilletes; i++) {
-
-		}
+		
+		s.reservarVariosBilletes();
 	}
 
 
