@@ -30,36 +30,36 @@ public class Menu implements MainMenuInterface {
 		do {
 			StringBuffer str = new StringBuffer();
 
-			str.append("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
+			str.append("✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈️✈✈️✈️✈️✈️✈️✈");
 			str.append("\n||                              ||");
 			str.append("\n||      ELIJA UNA OPCIÒN:       ||");
 			str.append("\n");
 			str.append("||------------------------------||");
 			str.append("\n||                              ||");
 			str.append("\n");
-			str.append("|| 1 ► Billete Suelto ┊🃏 ");			 
+			str.append("|| 1 ► Billete Suelto     ");			 
 			str.append("      ||");
 			str.append("\n||                              ||");
 			str.append("\n||                              ||");
 			str.append("\n");
-			str.append("|| 2 ► Varios billetes 🃏┊🃏");  		
+			str.append("|| 2 ► Varios Billetes     ");  		
 			str.append("     ||");
 			str.append("\n||                              ||");
 			str.append("\n||                              ||");
 			str.append("\n");
-			str.append("|| 3 ► Asiento 👍libre/ocupado⛔ ");  		
+			str.append("|| 3 ► Asiento Libre/ocupado    ");  		
 			str.append("||");
 			str.append("\n||                              ||");
 			str.append("\n||                              ||");
-			str.append("\n|| 4 ► ✈️ Mostrar Asientos ✈️");  		
+			str.append("\n|| 4 ►  Mostrar Asientos    ");  		
 			str.append("    ||");
 			str.append("\n||                              ||");
 			str.append("\n||                              ||");
-			str.append("\n|| 5 ► Salir 👋    ");  		
+			str.append("\n|| 5 ► Salir       ");  		
 			str.append("             ||");
 			str.append("\n||                              ||");
 			str.append("\n||                              ||");
-			str.append("\n°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
+			str.append("\n✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈️✈✈️✈️✈️✈️✈️✈");
 
 			System.out.println(str.toString());
 
