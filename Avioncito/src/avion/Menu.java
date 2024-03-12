@@ -65,31 +65,28 @@ public class Menu implements MainMenuInterface {
 
 			eleccionOpcion = scannerInt();
 
-			if(eleccionOpcion == 1 || eleccionOpcion == 2) {
+			if(eleccionOpcion == 1) {
+				comprarEntrada();
+			}
 
-				if(eleccionOpcion == 1) {
-
-					comprarEntrada();
-
-				}
-
-				else if(eleccionOpcion == 2) {
-
-					comprarEntradas();
-
-				}
-
+			if(eleccionOpcion == 2) {
+				comprarEntradas();
 			}
 
 			if(eleccionOpcion == 3) {
-
+				System.out.println("Dime el asiento que quieres comprobar:");
+				String asiento = scannerString().toUpperCase();
+				s.comprobarAsiento(asiento);
 			}
 
 			if(eleccionOpcion == 4) {
 				s.mostrarAvion();
 			}
+			
 		}
 		while(eleccionOpcion != 5);
+		
+		System.out.println("Hasta pronto!!!");
 
 	}
 

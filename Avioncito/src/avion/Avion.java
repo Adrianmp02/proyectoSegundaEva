@@ -4,11 +4,10 @@ package avion;
 import java.util.ArrayList;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Avion implements AvionInterface {
-	
+
 	protected ArrayList<Asiento> asientosPrimera;
 	protected ArrayList<Asiento> asientosTurista;
 	protected ArrayList<Asiento> avionAsientos = new ArrayList<Asiento>();
@@ -94,7 +93,7 @@ public class Avion implements AvionInterface {
 
 	}
 
-	
+
 	public String toString() {
 
 		int variableP = 0;
@@ -106,7 +105,7 @@ public class Avion implements AvionInterface {
 		int tamañoT = 28;
 
 		StringBuffer str = new StringBuffer();
-		
+
 		str.append("A  ");
 
 		for(int j = variableP; j <= tamañoP; j++) {
@@ -178,6 +177,7 @@ public class Avion implements AvionInterface {
 
 		}
 
+		str.append("\n");
 		str.append("\n");
 
 		//-----------------------------------------------------------------------------------//
@@ -258,23 +258,24 @@ public class Avion implements AvionInterface {
 		for(int j = variableT; j <= tamañoT;j++) {
 
 			str.append(asientosTurista.get(j).toString());
-			
+
 		}
 		str.append("\n");
-		
-		
+
+
 		return str.toString();
 	}
-	
+
 	@Override
 	public void mostrarAvion() throws AvionException {
-		
+
 		System.out.println(toString());
-		
+
 	}
 
 	@Override
 	public void comprobarAsiento(String numAsiento) throws AsientoException {
+
 		boolean flag = true;
 		for(int i = 0; i < avionAsientos.size(); i++) {
 			if(!numAsiento.toUpperCase().equals(avionAsientos.get(i).getNumAsiento())) {
@@ -304,6 +305,7 @@ public class Avion implements AvionInterface {
 
 	@Override
 	public void reservarAsiento(String numAsiento, Persona comprador) throws AsientoException {
+
 		Asiento cambio = new AsientoOcupado(numAsiento, comprador);
 		boolean isFirstClass = false;
 		boolean flagAsientoValido = true;
@@ -336,6 +338,7 @@ public class Avion implements AvionInterface {
 						return;
 					}else {
 						System.out.println("El asiento esta ocupado. Ingrese otro distinto");
+						comprarBillete();
 					}
 				}
 			}
@@ -348,6 +351,7 @@ public class Avion implements AvionInterface {
 						return;
 					}else {
 						System.out.println("El asiento esta ocupado. Ingrese otro distinto");
+						comprarBillete();
 					}
 				}
 			} 
@@ -356,9 +360,10 @@ public class Avion implements AvionInterface {
 
 	public void comprarBillete() throws AsientoException {
 
-		System.out.println("Dime el asiento que quieres reservar.");
+		System.out.println("Dime el asiento que quieres reservar:");
 
-		String vuelo = scannerString().toUpperCase();
+		String vuelo = scannerString();
+		vuelo = vuelo.toUpperCase();
 
 		boolean comp = true; //Flag, por defecto true ya que suponemos que el asiento es correcto
 		for(int excp = 0; excp < avionAsientos.size(); excp++) {
@@ -392,26 +397,106 @@ public class Avion implements AvionInterface {
 		System.out.println("¿Cuantos billetes quieres reservar?");
 		int numBilletes = scannerInt();
 
+		if(numBilletes == 1){
+			comprarBillete();
+			return;
+		}
 
+		if(numBilletes < avionAsientos.size()) {
+
+			ArrayList<Asiento> arrayAux = nuevoArrayAsientosT();
+
+			Persona p = Persona.crearPersona();
+
+			int seguir = 0;
+			int aux = 0;
+
+			for (int i = 0; i < arrayAux.size(); i++) {
+
+				if(!arrayAux.get(i).reservado) {
+					seguir++;
+				}else {
+					seguir = 0;
+				}
+
+				if(seguir == 1) {
+					aux = i;
+				}
+
+				if(seguir == numBilletes) {
+					break;
+				}
+			}
+
+			if(seguir == numBilletes) {
+				for (int i = aux; i < numBilletes; i++) {
+					reservarAsiento(arrayAux.get(i).numAsiento, p);
+				}
+			}
+
+			for (int i = 0; i < asientosTurista.size(); i++) {
+				for (int j = 0; j < arrayAux.size(); j++) {
+					if(arrayAux.get(j).numAsiento == asientosTurista.get(i).numAsiento) {
+						asientosTurista.get(i).reservado = arrayAux.get(j).reservado;
+					}
+				}
+			}
+
+		}else {
+			System.out.println("Numero de billetes no valido");
+			reservarVariosBilletes();
+		}
 
 	}
 
+	/*public ArrayList<Asiento> nuevoArrayAsientosP() {
+
+		ArrayList<Asiento> aux = new ArrayList<Asiento>();
+		ArrayList<Character> letraPrimeraClase;
 
 
 
+	}*/
 
-	
+	public ArrayList<Asiento> nuevoArrayAsientosT() {
 
+		ArrayList<Asiento> aux = new ArrayList<Asiento>();
+		ArrayList<Integer> filaTurista = new ArrayList<Integer>();
+		ArrayList<Character> letraTurista = new ArrayList<Character>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F'));;
 
+		for(int i = 0; i <= 33; i++) {
 
+			filaTurista.add(i);
 
+		}
 
+		for(int i = 5; i < filaTurista.size(); i++) {
 
+			for(int j = 0; j < letraTurista.size(); j++) {
 
+				Asiento aux1 = new AsientoLibre(""+filaTurista.get(i)+letraTurista.get(j), 25.99);
 
+				aux.add(aux1);
 
+			}
 
+		}
+		
+		//Preguntar a Pablo sobre como igualar los asientos de un arraylist a otro
 
+		for (int i = 0; i < asientosTurista.size(); i++) {
+
+			for (int j = 0; j < aux.size(); j++) {
+				if(aux.get(j).numAsiento == asientosTurista.get(i).numAsiento) {
+					aux.get(j).reservado = asientosTurista.get(i).reservado;
+				}
+			}
+
+		}
+
+		return aux;
+
+	}
 
 	//NO tocar
 	public String scannerString() {
@@ -423,6 +508,7 @@ public class Avion implements AvionInterface {
 		return n;
 
 	}
+
 	public int scannerInt() {
 
 		@SuppressWarnings("resource")
@@ -432,8 +518,4 @@ public class Avion implements AvionInterface {
 		return n;
 
 	}
-
-
-	
-
 }
