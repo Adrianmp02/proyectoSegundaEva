@@ -30,7 +30,7 @@ public class Menu implements MainMenuInterface {
 		do {
 			StringBuffer str = new StringBuffer();
 
-			str.append("✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈️✈✈️✈️✈️✈️✈️✈");
+			str.append("✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈️✈✈️✈️✈️✈️✈️✈✈");
 			str.append("\n||                              ||");
 			str.append("\n||      ELIJA UNA OPCIÒN:       ||");
 			str.append("\n");
@@ -59,7 +59,7 @@ public class Menu implements MainMenuInterface {
 			str.append("             ||");
 			str.append("\n||                              ||");
 			str.append("\n||                              ||");
-			str.append("\n✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈️✈✈️✈️✈️✈️✈️✈");
+			str.append("\n✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈️✈✈️✈️✈️✈️✈️✈✈");
 
 			System.out.println(str.toString());
 

@@ -1,4 +1,3 @@
-
 package avion;
 
 import java.util.ArrayList;
@@ -161,7 +160,6 @@ public class Avion implements AvionInterface {
 		//-----------------------------------------------------------------------------------//
 
 
-
 		variableT += 29;
 
 		tamañoT += 29;
@@ -181,7 +179,6 @@ public class Avion implements AvionInterface {
 		str.append("\n");
 
 		//-----------------------------------------------------------------------------------//
-
 
 
 		variableT += 29;
@@ -392,6 +389,7 @@ public class Avion implements AvionInterface {
 
 	}
 
+
 	public void reservarVariosBilletes() throws AsientoException {
 
 		System.out.println("¿Cuantos billetes quieres reservar?");
@@ -404,97 +402,63 @@ public class Avion implements AvionInterface {
 
 		if(numBilletes < avionAsientos.size()) {
 
-			ArrayList<Asiento> arrayAux = nuevoArrayAsientosT();
-
 			Persona p = Persona.crearPersona();
 
 			int seguir = 0;
-			int aux = 0;
+			Asiento aux = null;
 
-			for (int i = 0; i < arrayAux.size(); i++) {
-
-				if(!arrayAux.get(i).reservado) {
-					seguir++;
-				}else {
-					seguir = 0;
-				}
-
-				if(seguir == 1) {
-					aux = i;
-				}
-
-				if(seguir == numBilletes) {
+			boolean salir = false;
+			for (int i = 0; i < 33; i++) {
+				int a = i;
+				if(salir == true) {
 					break;
 				}
-			}
-
-			if(seguir == numBilletes) {
-				for (int i = aux; i < numBilletes; i++) {
-					reservarAsiento(arrayAux.get(i).numAsiento, p);
-				}
-			}
-
-			for (int i = 0; i < asientosTurista.size(); i++) {
-				for (int j = 0; j < arrayAux.size(); j++) {
-					if(arrayAux.get(j).numAsiento == asientosTurista.get(i).numAsiento) {
-						asientosTurista.get(i).reservado = arrayAux.get(j).reservado;
+				for (int j = 0; j < 6; j++) {
+					if(!asientosTurista.get(a).reservado) {
+						seguir++;
+						if(seguir == 1) {
+							aux = asientosTurista.get(a);
+						}
+						a+=29;
+					}else {
+						a+=29;
+						seguir = 0;
+					}
+					if(seguir == numBilletes) {
+						salir = true;
+						break;
 					}
 				}
 			}
+			
+			boolean reservar = false;
+			int reservado = 0;
+			if(seguir == numBilletes) {
+				for (int i = 0; i < 33; i++) {
+					
+					int b = i;
+					for (int j = 0; j < 6; j++) {
+						if(reservado != numBilletes) {
+							if(asientosTurista.get(b) == aux) {
+								reservar = true;
+							}
+							if(reservar) {
+								reservarAsiento(asientosTurista.get(b).numAsiento, p);
+								b+=29;
+								reservado++;
+							}else {
+								b+=29;
+							}
+						}
+					}
+				}
+			}
+
 
 		}else {
 			System.out.println("Numero de billetes no valido");
 			reservarVariosBilletes();
 		}
-
-	}
-
-	/*public ArrayList<Asiento> nuevoArrayAsientosP() {
-
-		ArrayList<Asiento> aux = new ArrayList<Asiento>();
-		ArrayList<Character> letraPrimeraClase;
-
-
-
-	}*/
-
-	public ArrayList<Asiento> nuevoArrayAsientosT() {
-
-		ArrayList<Asiento> aux = new ArrayList<Asiento>();
-		ArrayList<Integer> filaTurista = new ArrayList<Integer>();
-		ArrayList<Character> letraTurista = new ArrayList<Character>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F'));;
-
-		for(int i = 0; i <= 33; i++) {
-
-			filaTurista.add(i);
-
-		}
-
-		for(int i = 5; i < filaTurista.size(); i++) {
-
-			for(int j = 0; j < letraTurista.size(); j++) {
-
-				Asiento aux1 = new AsientoLibre(""+filaTurista.get(i)+letraTurista.get(j), 25.99);
-
-				aux.add(aux1);
-
-			}
-
-		}
-		
-		//Preguntar a Pablo sobre como igualar los asientos de un arraylist a otro
-
-		for (int i = 0; i < asientosTurista.size(); i++) {
-
-			for (int j = 0; j < aux.size(); j++) {
-				if(aux.get(j).numAsiento == asientosTurista.get(i).numAsiento) {
-					aux.get(j).reservado = asientosTurista.get(i).reservado;
-				}
-			}
-
-		}
-
-		return aux;
 
 	}
 
