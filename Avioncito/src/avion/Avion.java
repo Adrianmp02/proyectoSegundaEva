@@ -435,7 +435,6 @@ public class Avion implements AvionInterface {
 			int reservado = 0;
 			if(seguir == numBilletes) {
 				for (int i = 0; i < 33; i++) {
-					
 					int b = i;
 					for (int j = 0; j < 6; j++) {
 						if(reservado != numBilletes) {
