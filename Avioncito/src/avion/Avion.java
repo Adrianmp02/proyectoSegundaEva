@@ -400,7 +400,14 @@ public class Avion implements AvionInterface {
 			return;
 		}
 
-		if(numBilletes < avionAsientos.size()) {
+		int contador = 0;
+		for (int i = 0; i < asientosTurista.size(); i++) {
+			if(!asientosTurista.get(i).reservado) {
+				contador++;
+			}
+		}
+
+		if(numBilletes < contador) {
 
 			Persona p = Persona.crearPersona();
 
@@ -408,7 +415,7 @@ public class Avion implements AvionInterface {
 			Asiento aux = null;
 
 			boolean salir = false;
-			for (int i = 0; i < 33; i++) {
+			for (int i = 0; i < 33; i++) {				
 				int a = i;
 				if(salir == true) {
 					break;
@@ -430,32 +437,100 @@ public class Avion implements AvionInterface {
 					}
 				}
 			}
-			
-			boolean reservar = false;
-			int reservado = 0;
-			if(seguir == numBilletes) {
-				for (int i = 0; i < 33; i++) {
-					int b = i;
-					for (int j = 0; j < 6; j++) {
-						if(reservado != numBilletes) {
-							if(asientosTurista.get(b) == aux) {
-								reservar = true;
-							}
-							if(reservar) {
-								reservarAsiento(asientosTurista.get(b).numAsiento, p);
-								b+=29;
-								reservado++;
+
+			if(seguir == 0) {
+
+				int sobrantes = 0;
+				
+				int totalReservados = 0;
+				
+				int maxAsientosSeguidos = 0;
+
+				while(totalReservados != numBilletes) {
+					
+					sobrantes = numBilletes-maxAsientosSeguidos;
+					
+					maxAsientosSeguidos = 0;
+					
+					for (int i = 0; i < 33; i++) {				
+						int a = i;
+						if(salir == true) {
+							break;
+						}
+						for (int j = 0; j < 6; j++) {
+							if(!asientosTurista.get(a).reservado) {
+								seguir++;
+								if(seguir == 1) {
+									aux = asientosTurista.get(a);
+								}
+								maxAsientosSeguidos++;
+								a+=29;
 							}else {
-								b+=29;
+								if(seguir > maxAsientosSeguidos) {
+									maxAsientosSeguidos = seguir;
+								}
+								a+=29;
+								seguir = 0;
+							}
+							if(seguir == sobrantes) {
+								salir = true;
+								break;
+							}
+						}
+					}
+					
+					totalReservados += maxAsientosSeguidos;
+					
+					boolean reservar = false;
+					int reservado = 0;
+					if(seguir == maxAsientosSeguidos) {
+						for (int i = 0; i < 33; i++) {
+							int b = i;
+							for (int j = 0; j < 6; j++) {
+								if(reservado != maxAsientosSeguidos) {
+									if(asientosTurista.get(b) == aux) {
+										reservar = true;
+									}
+									if(reservar) {
+										reservarAsiento(asientosTurista.get(b).numAsiento, p);
+										b+=29;
+										reservado++;
+									}else {
+										b+=29;
+									}
+								}
+							}
+						}
+					}
+				}
+
+			}else {
+				
+				boolean reservar = false;
+				int reservado = 0;
+				if(seguir == numBilletes) {
+					for (int i = 0; i < 33; i++) {
+						int b = i;
+						for (int j = 0; j < 6; j++) {
+							if(reservado != numBilletes) {
+								if(asientosTurista.get(b) == aux) {
+									reservar = true;
+								}
+								if(reservar) {
+									reservarAsiento(asientosTurista.get(b).numAsiento, p);
+									b+=29;
+									reservado++;
+								}else {
+									b+=29;
+								}
 							}
 						}
 					}
 				}
 			}
 
-
 		}else {
-			System.out.println("Numero de billetes no valido");
+			System.out.println("No hay suficientes asientos libres");
 			reservarVariosBilletes();
 		}
 
