@@ -74,9 +74,7 @@ public class Menu implements MainMenuInterface {
 			}
 
 			if(eleccionOpcion == 3) {
-				System.out.println("Dime el asiento que quieres comprobar:");
-				String asiento = scannerString().toUpperCase();
-				s.comprobarAsiento(asiento);
+				comprobarAsiento();
 			}
 
 			if(eleccionOpcion == 4) {
@@ -108,8 +106,9 @@ public class Menu implements MainMenuInterface {
 
 	@Override
 	public void comprobarAsiento() throws AsientoException  {
-
-		String asiento=scannerString();
+		
+		System.out.println("Dime el asiento que quieres comprobar:");
+		String asiento=scannerString().toUpperCase();;
 		s.comprobarAsiento(asiento);
 
 	}

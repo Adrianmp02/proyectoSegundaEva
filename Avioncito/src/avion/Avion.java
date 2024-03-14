@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Avion implements AvionInterface {
 
+	protected int capacidadMaxima;
 	protected ArrayList<Asiento> asientosPrimera;
 	protected ArrayList<Asiento> asientosTurista;
 	protected ArrayList<Asiento> avionAsientos = new ArrayList<Asiento>();
@@ -18,6 +19,7 @@ public class Avion implements AvionInterface {
 		ArrayList<Integer> filaTurista;
 		ArrayList<Character> letraTurista;
 		ArrayList<Character> letraPrimeraClase;
+		capacidadMaxima = 174;
 
 		if(asientosPrimera != null) {
 
@@ -272,6 +274,20 @@ public class Avion implements AvionInterface {
 
 	@Override
 	public void comprobarAsiento(String numAsiento) throws AsientoException {
+		
+		avionAsientos = new ArrayList<Asiento>();
+		
+		for(int i = 0; i < asientosPrimera.size(); i++) {
+
+			avionAsientos.add(asientosPrimera.get(i));
+
+		}
+
+		for(int i = 0; i < asientosTurista.size(); i++) {
+
+			avionAsientos.add(asientosTurista.get(i));
+
+		}
 
 		boolean flag = true;
 		for(int i = 0; i < avionAsientos.size(); i++) {
@@ -395,6 +411,8 @@ public class Avion implements AvionInterface {
 		System.out.println("¿Cuantos billetes quieres reservar?");
 		int numBilletes = scannerInt();
 
+		Persona p = Persona.crearPersona();
+
 		if(numBilletes == 1){
 			comprarBillete();
 			return;
@@ -407,20 +425,48 @@ public class Avion implements AvionInterface {
 			}
 		}
 
-		if(numBilletes < contador) {
+		if(numBilletes <= contador) {
 
-			Persona p = Persona.crearPersona();
+			int veces = bucleDeAsientos(numBilletes, p);
 
-			int seguir = 0;
-			Asiento aux = null;
+			while(veces != 0) {
+
+				veces = bucleDeAsientos(veces, p);
+
+			}
+
+		}else {
+			System.out.println("No hay suficientes asientos libres");
+			reservarVariosBilletes();
+		}
+
+	}
+
+
+	public int logicaAsientos(int numBilletes, Persona p) throws AsientoException {
+
+		int asientosTotales = 0;
+		int seguir = 0;
+		Asiento aux = null;
+		
+		int contador = 0;
+		for (int i = 0; i < asientosTurista.size(); i++) {
+			if(!asientosTurista.get(i).reservado) {
+				contador++;
+			}
+		}
+
+		if(numBilletes != contador) {
 
 			boolean salir = false;
-			for (int i = 0; i < 33; i++) {				
+			for (int i = 0; i < 33; i++) {
+
 				int a = i;
 				if(salir == true) {
 					break;
 				}
 				for (int j = 0; j < 6; j++) {
+					asientosTotales++;
 					if(!asientosTurista.get(a).reservado) {
 						seguir++;
 						if(seguir == 1) {
@@ -436,76 +482,20 @@ public class Avion implements AvionInterface {
 						break;
 					}
 				}
+
+				if(asientosTotales == 175) {
+					seguir = 0;
+					break;
+				}
 			}
 
 			if(seguir == 0) {
 
-				int sobrantes = 0;
-				
-				int totalReservados = 0;
-				
-				int maxAsientosSeguidos = 0;
-
-				while(totalReservados != numBilletes) {
-					
-					sobrantes = numBilletes-maxAsientosSeguidos;
-					
-					maxAsientosSeguidos = 0;
-					
-					for (int i = 0; i < 33; i++) {				
-						int a = i;
-						if(salir == true) {
-							break;
-						}
-						for (int j = 0; j < 6; j++) {
-							if(!asientosTurista.get(a).reservado) {
-								seguir++;
-								if(seguir == 1) {
-									aux = asientosTurista.get(a);
-								}
-								maxAsientosSeguidos++;
-								a+=29;
-							}else {
-								if(seguir > maxAsientosSeguidos) {
-									maxAsientosSeguidos = seguir;
-								}
-								a+=29;
-								seguir = 0;
-							}
-							if(seguir == sobrantes) {
-								salir = true;
-								break;
-							}
-						}
-					}
-					
-					totalReservados += maxAsientosSeguidos;
-					
-					boolean reservar = false;
-					int reservado = 0;
-					if(seguir == maxAsientosSeguidos) {
-						for (int i = 0; i < 33; i++) {
-							int b = i;
-							for (int j = 0; j < 6; j++) {
-								if(reservado != maxAsientosSeguidos) {
-									if(asientosTurista.get(b) == aux) {
-										reservar = true;
-									}
-									if(reservar) {
-										reservarAsiento(asientosTurista.get(b).numAsiento, p);
-										b+=29;
-										reservado++;
-									}else {
-										b+=29;
-									}
-								}
-							}
-						}
-					}
-				}
+				System.out.println("Si llego hasta aqui");
+				return 0;
 
 			}else {
-				
+
 				boolean reservar = false;
 				int reservado = 0;
 				if(seguir == numBilletes) {
@@ -528,12 +518,74 @@ public class Avion implements AvionInterface {
 					}
 				}
 			}
-
 		}else {
-			System.out.println("No hay suficientes asientos libres");
-			reservarVariosBilletes();
+			
+			boolean salir = false;
+			for (int i = 0; i < 33; i++) {
+
+				int a = i;
+				if(salir == true) {
+					break;
+				}
+				for (int j = 0; j < 6; j++) {
+					
+					if(!asientosTurista.get(a).reservado) {
+						seguir++;
+						if(seguir == 1) {
+							aux = asientosTurista.get(a);
+						}
+						a+=29;
+					}else {
+						a+=29;
+						seguir = 0;
+					}
+					if(seguir == numBilletes) {
+						salir = true;
+						break;
+					}
+				}
+			}
+					
+			boolean reservar = false;
+			int reservado = 0;
+			if(seguir == numBilletes) {
+				for (int i = 0; i < 33; i++) {
+					int b = i;
+					for (int j = 0; j < 6; j++) {
+						if(reservado != numBilletes) {
+							if(asientosTurista.get(b) == aux) {
+								reservar = true;
+							}
+							if(reservar) {
+								reservarAsiento(asientosTurista.get(b).numAsiento, p);
+								b+=29;
+								reservado++;
+							}else {
+								b+=29;
+							}
+						}
+					}
+				}
+			}
+		}
+		return 1;
+
+	}
+
+	public int bucleDeAsientos(int numBilletes, Persona p) throws AsientoException {
+
+		int num = logicaAsientos(numBilletes, p);
+		int conteo = 0;
+
+		while(num == 0) {
+
+			numBilletes--;
+			conteo++;
+			num = logicaAsientos(numBilletes, p);
+
 		}
 
+		return conteo;
 	}
 
 	//NO tocar
