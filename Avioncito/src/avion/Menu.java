@@ -3,9 +3,10 @@ package avion;
 import java.util.Scanner;
 
 public class Menu implements MainMenuInterface {
-	
-	Avion vuelo1;
-	
+
+	Avion vuelo1 = new Avion();
+
+
 	protected Menu() {
 		this.vuelo1 = new Avion();
 	}
@@ -15,12 +16,11 @@ public class Menu implements MainMenuInterface {
 		Menu menu = new Menu();
 
 		menu.iniciar();
-		
+
 	}
 
 	@Override
 	public void iniciar() throws AvionException, AsientoException {	
-
 
 		vuelo1.crearAvion();
 		int eleccionOpcion;
@@ -78,10 +78,10 @@ public class Menu implements MainMenuInterface {
 			if(eleccionOpcion == 4) {
 				vuelo1.mostrarAvion();
 			}
-			
+
 		}
 		while(eleccionOpcion != 5);
-		
+
 		System.out.println("Hasta pronto!!!");
 
 	}
@@ -95,13 +95,13 @@ public class Menu implements MainMenuInterface {
 
 	@Override
 	public void comprarEntradas() throws AsientoException {
-		
+
 		vuelo1.reservarVariosBilletes();
 	}
 
 	@Override
 	public void comprobarAsiento() throws AsientoException  {
-		
+
 		System.out.println("Dime el asiento que quieres comprobar:");
 		String asiento=scannerString().toUpperCase();;
 		vuelo1.comprobarAsiento(asiento);
@@ -115,9 +115,9 @@ public class Menu implements MainMenuInterface {
 
 	}
 
-	
-	
-	
+
+
+
 	//NO tocar
 	public String scannerString() {
 

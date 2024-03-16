@@ -13,10 +13,10 @@ public class Avion implements AvionInterface {
 	protected ArrayList<Asiento> avionAsientos;
 	
 	protected Avion() {
-		this.capacidadMaxima = 174;
+		this.capacidadMaxima = 190;
 		this.asientosPrimera = new ArrayList<Asiento>();
 		this.asientosTurista = new ArrayList<Asiento>();
-		this.avionAsientos = new ArrayList<Asiento>();
+		this.avionAsientos  = new ArrayList<Asiento>();
 	}
 
 	@Override
@@ -27,16 +27,11 @@ public class Avion implements AvionInterface {
 		ArrayList<Character> letraTurista;
 		ArrayList<Character> letraPrimeraClase;
 
-		/*if(asientosPrimera != null) {
+		if(!asientosPrimera.isEmpty() || !asientosTurista.isEmpty()) {
 
 			throw new AvionException("Ya se encuentra un avion creado");
 
 		}
-
-		if(asientosTurista != null) {
-
-			throw new AvionException("Ya se encuentra un avion creado");
-		}*/
 
 		filaPrimeraClase = new ArrayList<Integer>();
 		filaTurista = new ArrayList<Integer>();
