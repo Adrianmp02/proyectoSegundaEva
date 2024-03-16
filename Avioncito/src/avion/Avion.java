@@ -150,7 +150,7 @@ public class Avion implements AvionInterface {
 		variableT += 29;
 		tamañoT += 29;
 
-		str.append("◀🚻                |");
+		str.append("◀🚻                 |");
 		str.append(" C  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
@@ -167,7 +167,7 @@ public class Avion implements AvionInterface {
 		variableT += 29;
 		tamañoT += 29;
 
-		str.append("◀🚻                |");
+		str.append("◀🚻                 |");
 		str.append(" D  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
