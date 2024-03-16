@@ -6,9 +6,9 @@ public class Asiento {
 	protected String numAsiento;
 	
 	public Asiento(String num) {
+		
 		this.reservado = false;
 		this.numAsiento = num;
-		
 		
 	}
 
@@ -39,6 +39,5 @@ public class Asiento {
 		
 		return str.toString();
 	}
-	
 	
 }

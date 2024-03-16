@@ -12,14 +12,12 @@ public class Avion implements AvionInterface {
 	protected ArrayList<Asiento> asientosTurista;
 	protected ArrayList<Asiento> avionAsientos;
 	
-	
 	protected Avion() {
 		this.capacidadMaxima = 174;
 		this.asientosPrimera = new ArrayList<Asiento>();
 		this.asientosTurista = new ArrayList<Asiento>();
 		this.avionAsientos = new ArrayList<Asiento>();
 	}
-
 
 	@Override
 	public void crearAvion() throws AvionException {
@@ -29,7 +27,7 @@ public class Avion implements AvionInterface {
 		ArrayList<Character> letraTurista;
 		ArrayList<Character> letraPrimeraClase;
 
-		if(asientosPrimera != null) {
+		/*if(asientosPrimera != null) {
 
 			throw new AvionException("Ya se encuentra un avion creado");
 
@@ -38,7 +36,7 @@ public class Avion implements AvionInterface {
 		if(asientosTurista != null) {
 
 			throw new AvionException("Ya se encuentra un avion creado");
-		}
+		}*/
 
 		filaPrimeraClase = new ArrayList<Integer>();
 		filaTurista = new ArrayList<Integer>();
@@ -98,22 +96,16 @@ public class Avion implements AvionInterface {
 
 		}
 
-
 	}
-
 
 	public String toString() {
 
 		int variableP = 0;
-
 		int tamañoP = 3;
-
 		int variableT = 0;
-
 		int tamañoT = 28;
 
 		StringBuffer str = new StringBuffer();
-
 		str.append("A  ");
 
 		for(int j = variableP; j <= tamañoP; j++) {
@@ -123,7 +115,6 @@ public class Avion implements AvionInterface {
 		}
 
 		str.append(" |");
-
 		str.append(" A  ");
 
 		for(int j = variableT; j <= tamañoT; j++) {
@@ -131,19 +122,14 @@ public class Avion implements AvionInterface {
 			str.append(asientosTurista.get(j).toString());
 		}
 
-
 		//-----------------------------------------------------------------------------------//
 
 		variableP += 4;
-
 		tamañoP += 4;
-
 		variableT += 29;
-
 		tamañoT += 29;
 
 		str.append("\n");
-
 		str.append("B  ");
 
 		for(int j = variableP; j <= tamañoP; j++) {
@@ -153,7 +139,6 @@ public class Avion implements AvionInterface {
 		}
 
 		str.append(" |");
-
 		str.append(" B  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
@@ -163,19 +148,14 @@ public class Avion implements AvionInterface {
 		}
 
 		str.append(" 🚻");
-
 		str.append("\n");
 
 		//-----------------------------------------------------------------------------------//
 
-
 		variableT += 29;
-
 		tamañoT += 29;
 
-
 		str.append("◀🚻                |");
-
 		str.append(" C  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
@@ -189,14 +169,10 @@ public class Avion implements AvionInterface {
 
 		//-----------------------------------------------------------------------------------//
 
-
 		variableT += 29;
-
 		tamañoT += 29;
 
-
 		str.append("◀🚻                |");
-
 		str.append(" D  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
@@ -205,19 +181,14 @@ public class Avion implements AvionInterface {
 
 		}
 
-
 		//-----------------------------------------------------------------------------------//
 
 		variableP += 4;
-
 		tamañoP += 4;
-
 		variableT += 29;
-
 		tamañoT += 29;
 
 		str.append("\n");
-
 		str.append("E  ");
 
 		for(int j = variableP; j <= tamañoP; j++) {
@@ -227,7 +198,6 @@ public class Avion implements AvionInterface {
 		}
 
 		str.append(" |");
-
 		str.append(" E  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
@@ -240,15 +210,11 @@ public class Avion implements AvionInterface {
 		//-----------------------------------------------------------------------------------//
 
 		variableP += 4;
-
 		tamañoP += 4;
-
 		variableT += 29;
-
 		tamañoT += 29;
 
 		str.append("\n");
-
 		str.append("F  ");
 
 		for(int j = variableP; j <= tamañoP; j++) {
@@ -258,7 +224,6 @@ public class Avion implements AvionInterface {
 		}
 
 		str.append(" |");
-
 		str.append(" F  ");
 
 		for(int j = variableT; j <= tamañoT;j++) {
@@ -266,8 +231,8 @@ public class Avion implements AvionInterface {
 			str.append(asientosTurista.get(j).toString());
 
 		}
+	
 		str.append("\n");
-
 
 		return str.toString();
 	}
@@ -297,6 +262,7 @@ public class Avion implements AvionInterface {
 		}
 
 		boolean flag = true;
+
 		for(int i = 0; i < avionAsientos.size(); i++) {
 			if(!numAsiento.toUpperCase().equals(avionAsientos.get(i).getNumAsiento())) {
 				flag = false;
@@ -305,10 +271,13 @@ public class Avion implements AvionInterface {
 				break;
 			}
 		}
+		
 		if(!flag) {
 			throw new AsientoException("Asiento no valido");
 		}
+		
 		boolean flagReservar = false;
+		
 		for(int i = 0; i < avionAsientos.size(); i++) {
 			if(numAsiento.toUpperCase().equals(avionAsientos.get(i).getNumAsiento())) {
 				if(avionAsientos.get(i).reservado) {

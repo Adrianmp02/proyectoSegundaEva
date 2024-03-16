@@ -17,6 +17,4 @@ public class AsientoLibre extends Asiento {
 		this.precio = precio;
 	}
 
-	
-
 }

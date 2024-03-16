@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 public class Menu implements MainMenuInterface {
 	
+	Avion vuelo1;
 	
-	Avion s = new Avion();
-	
-	
+	protected Menu() {
+		this.vuelo1 = new Avion();
+	}
 
 	public static void main(String[] args) throws AvionException, AsientoException {
 
@@ -15,16 +16,13 @@ public class Menu implements MainMenuInterface {
 
 		menu.iniciar();
 		
-		
 	}
-
-
 
 	@Override
 	public void iniciar() throws AvionException, AsientoException {	
 
 
-		s.crearAvion();
+		vuelo1.crearAvion();
 		int eleccionOpcion;
 
 		do {
@@ -78,7 +76,7 @@ public class Menu implements MainMenuInterface {
 			}
 
 			if(eleccionOpcion == 4) {
-				s.mostrarAvion();
+				vuelo1.mostrarAvion();
 			}
 			
 		}
@@ -88,74 +86,35 @@ public class Menu implements MainMenuInterface {
 
 	}
 
-
-
 	@Override
 	public void comprarEntrada() throws AsientoException {
 
-		s.comprarBillete();
+		vuelo1.comprarBillete();
 
 	}
 
 	@Override
 	public void comprarEntradas() throws AsientoException {
 		
-		s.reservarVariosBilletes();
+		vuelo1.reservarVariosBilletes();
 	}
-
 
 	@Override
 	public void comprobarAsiento() throws AsientoException  {
 		
 		System.out.println("Dime el asiento que quieres comprobar:");
 		String asiento=scannerString().toUpperCase();;
-		s.comprobarAsiento(asiento);
+		vuelo1.comprobarAsiento(asiento);
 
 	}
 
 	@Override
 	public void mostrarAsientos() throws AvionException {
 
-		s.mostrarAvion();
+		vuelo1.mostrarAvion();
 
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
