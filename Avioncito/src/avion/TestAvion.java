@@ -9,10 +9,6 @@ import org.junit.jupiter.api.Test;
 
 class TestAvion {
 	
-	//IMPORTANTE------------------------------------------------------------------------
-	//har algunos test que no funcionan porque no estan bien los throw esceptions
-	//----------------------------------------------------------------------------------
-	
 	@Test
 	//Se comprueba el metodo "crearAvion"
 	void testCrearAvion() throws AvionException{

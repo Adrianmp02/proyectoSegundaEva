@@ -10,7 +10,16 @@ public class Avion implements AvionInterface {
 	protected int capacidadMaxima;
 	protected ArrayList<Asiento> asientosPrimera;
 	protected ArrayList<Asiento> asientosTurista;
-	protected ArrayList<Asiento> avionAsientos = new ArrayList<Asiento>();
+	protected ArrayList<Asiento> avionAsientos;
+	
+	
+	protected Avion() {
+		this.capacidadMaxima = 174;
+		this.asientosPrimera = new ArrayList<Asiento>();
+		this.asientosTurista = new ArrayList<Asiento>();
+		this.avionAsientos = new ArrayList<Asiento>();
+	}
+
 
 	@Override
 	public void crearAvion() throws AvionException {
@@ -19,7 +28,6 @@ public class Avion implements AvionInterface {
 		ArrayList<Integer> filaTurista;
 		ArrayList<Character> letraTurista;
 		ArrayList<Character> letraPrimeraClase;
-		capacidadMaxima = 174;
 
 		if(asientosPrimera != null) {
 
@@ -36,8 +44,7 @@ public class Avion implements AvionInterface {
 		filaTurista = new ArrayList<Integer>();
 		letraTurista = new ArrayList<Character>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F'));
 		letraPrimeraClase = new ArrayList<Character>(Arrays.asList('A', 'B', 'E', 'F'));
-		asientosPrimera = new ArrayList<Asiento>();
-		asientosTurista = new ArrayList<Asiento>();
+		
 
 		//Damos valor a la fila desde el numero 1 hasta el 4
 		for(int i = 1; i <= 4; i++) {
