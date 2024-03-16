@@ -51,7 +51,6 @@ public class Persona {
 	}
 	
 	
-	
 	public static Persona crearPersona() {
 		
 		System.out.println("Dime tus datos: ");

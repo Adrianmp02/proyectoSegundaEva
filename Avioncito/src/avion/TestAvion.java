@@ -3,48 +3,51 @@ package avion;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestAvion {
 	
+	Avion a1 = new Avion();
+	Persona p;
+	
+	@BeforeEach
+	void crearAvion() throws AvionException {
+		a1.crearAvion();	
+		p = Persona.crearPersona();;
+	}
+	
 	@Test
-	//Se comprueba el metodo "crearAvion"
-	void testCrearAvion() throws AvionException{
+	void testExcepcionCrearAvion() {
+		assertThrows(AvionException.class, ()->a1.crearAvion());
+	}
+			
+	@Test
+	void testTamañoAvion() {
 		
-		//Inicializamos el avion
-		Avion a1 = new Avion();
+		assertEquals(a1.avionAsientos.size(), 190);
+		assertEquals(a1.asientosPrimera.size(), 16);
+		assertEquals(a1.asientosTurista.size(), 174);
+	}
+	
+	@Test
+	void testReservarAsiento() throws AsientoException {
 		
-		//Creamos variables para comparar
-		int testCapacidadMaxima = 174 ;
-		ArrayList<Asiento> prueba= new ArrayList<Asiento>();
+		AsientoOcupado as1 = new AsientoOcupado("1A", p);
 		
-		//Comparamos que cuando inicializamos el avion, tiene 174 asientos
-		assertEquals(testCapacidadMaxima , a1.capacidadMaxima);
-		//Comparamos que cuando inicializamos el avion, tiene las variables "asientosPrimera", "asientosTurista" y "avionAsientos"; solo estan inicializadas.
-		assertEquals(prueba, a1.asientosPrimera);
-		assertEquals(prueba, a1.asientosTurista);
-		assertEquals(prueba, a1.avionAsientos);
+		a1.reservarAsiento("1A", p);
+		assertEquals(a1.asientosPrimera.get(0).getClass(), as1.getClass()); //Se comprueba que se reserva correctamente el asiento de P.C
 		
-		//Creamos el avion
-		a1.crearAvion();
+		AsientoOcupado as2 = new AsientoOcupado("5A", p);
+		a1.reservarAsiento("5A", p);
+		assertEquals(a1.asientosTurista.get(0).getClass(), as2.getClass()); 
+	}
+	
+	@Test
+	void testExceptionReservarAsientoFueraRango() {
 		
-		//Comparamos si las variables "asientosPrimera" esta inicializada.
-		boolean iguales = a1.asientosPrimera.equals(prueba);
-		assertEquals(false, iguales);//Como tienen datos dentro, sera falso
-		
-		//Comparamos si las variables "asientosTurista" esta inicializada.
-		iguales = a1.asientosTurista.equals(prueba);//Como tienen datos dentro, sera falso
-		assertEquals(false, iguales);
-		
-		//Comparamos si las variables "avionAsientos" esta inicializada.
-		iguales = a1.avionAsientos.equals(prueba);//Como tienen datos dentro, sera falso
-		assertEquals(false, iguales);
-		
-		//Como ya tenemos el avion creado, nos saltara "AvionException"
-		assertThrows(AvionException.class , ()->a1.crearAvion());
-		
+		assertThrows(AsientoException.class, ()->a1.reservarAsiento("55A", p));
+		assertThrows(AsientoException.class, ()->a1.reservarAsiento("-55A", p));
 	}
 	
 	@Test
