@@ -10,24 +10,25 @@ public class Menu implements MainMenuInterface {
 	protected Menu() {
 		this.vuelo1 = new Avion();
 	}
-
+	// Constructor de la clase Menu
 	public static void main(String[] args) throws AvionException, AsientoException {
 
 		Menu menu = new Menu();
+        int eleccionOpcion;
 
 		menu.iniciar();
 
 	}
-
+	// Método para iniciar el menú
 	@Override
 	public void iniciar() throws AvionException, AsientoException {	
 
-		vuelo1.crearAvion();
+		vuelo1.crearAvion();// Crear avión antes de mostrar el menú
 		int eleccionOpcion;
 
 		do {
-			StringBuffer str = new StringBuffer();
-
+			StringBuffer str = new StringBuffer();// Utilizando StringBuffer para construir el menú dinámicamente
+			// Construcción del menú
 			str.append("✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈");
 			str.append("\n||                              ||");
 			str.append("\n||      ELIJA UNA OPCIÒN:       ||");
@@ -62,7 +63,7 @@ public class Menu implements MainMenuInterface {
 			System.out.println(str.toString());
 
 			eleccionOpcion = scannerInt();
-
+			 // Realizar acciones basadas en la opción elegida
 			if(eleccionOpcion == 1) {
 				comprarEntrada();
 			}
@@ -85,20 +86,20 @@ public class Menu implements MainMenuInterface {
 		System.out.println("Hasta pronto!!!");
 
 	}
-
+	 // Método para comprar un billete suelto
 	@Override
 	public void comprarEntrada() throws AsientoException {
 
 		vuelo1.comprarBillete();
 
 	}
-
+	 // Método para comprar varios billetes
 	@Override
 	public void comprarEntradas() throws AsientoException {
 
 		vuelo1.reservarVariosBilletes();
 	}
-
+	 // Método para comprobar si un asiento está libre u ocupado
 	@Override
 	public void comprobarAsiento() throws AsientoException  {
 
@@ -107,7 +108,7 @@ public class Menu implements MainMenuInterface {
 		vuelo1.comprobarAsiento(asiento);
 
 	}
-
+	// Método para mostrar los asientos del avión
 	@Override
 	public void mostrarAsientos() throws AvionException {
 
@@ -117,7 +118,7 @@ public class Menu implements MainMenuInterface {
 
 
 
-
+	 // Método para leer una cadena de entrada del usuario
 	//NO tocar
 	public String scannerString() {
 
@@ -128,6 +129,7 @@ public class Menu implements MainMenuInterface {
 		return n;
 
 	}
+	// Método para leer un entero de entrada del usuario
 	public int scannerInt() {
 
 		@SuppressWarnings("resource")

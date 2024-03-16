@@ -12,6 +12,7 @@ public class Avion implements AvionInterface {
 	protected ArrayList<Asiento> asientosTurista;
 	protected ArrayList<Asiento> avionAsientos;
 	
+	 // Constructor de la clase Avion
 	protected Avion() {
 		this.capacidadMaxima = 190;
 		this.asientosPrimera = new ArrayList<Asiento>();
@@ -21,18 +22,19 @@ public class Avion implements AvionInterface {
 
 	@Override
 	public void crearAvion() throws AvionException {
-
+		// ArrayLists para almacenar la configuración de asientos
 		ArrayList<Integer> filaPrimeraClase;
 		ArrayList<Integer> filaTurista;
 		ArrayList<Character> letraTurista;
 		ArrayList<Character> letraPrimeraClase;
-
+		
+		// Verifica si ya se ha creado un avión
 		if(!asientosPrimera.isEmpty() || !asientosTurista.isEmpty()) {
 
 			throw new AvionException("Ya se encuentra un avion creado");
 
 		}
-
+		// Inicialización de las listas de filas y letras de asientos
 		filaPrimeraClase = new ArrayList<Integer>();
 		filaTurista = new ArrayList<Integer>();
 		letraTurista = new ArrayList<Character>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F'));
