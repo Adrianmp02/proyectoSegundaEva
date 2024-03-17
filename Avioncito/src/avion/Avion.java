@@ -191,6 +191,7 @@ public class Avion implements AvionInterface {
 	 */
 	@Override
 	public void reservarAsiento(String numAsiento, Persona p) throws AsientoException {
+		numAsiento = numAsiento.toUpperCase();
 	    // Verifica si el asiento buscado está presente en el conjunto de asientos.
 	    if (!asientos.containsKey(numAsiento)) {
 	        throw new AsientoException("El asiento que quieres reservar no está en el rango informado");
