@@ -3,29 +3,27 @@ package avion;
 public class Asiento {
 
 	protected boolean reservado;
-	protected String numAsiento;
+	protected int numAsiento;
+	protected char letraAsiento;
 	
-	public Asiento(String num) {
+	public Asiento(int num, char letra) {
 		
 		this.reservado = false;
 		this.numAsiento = num;
+		this.letraAsiento = letra;
 		
 	}
 
-	public boolean isReservado() {
+	public boolean estaReservado() {
 		return reservado;
 	}
 
-	public void setReservado(boolean reservado) {
-		this.reservado = reservado;
-	}
-
-	public String getNumAsiento() {
+	public int getNumAsiento() {
 		return numAsiento;
 	}
 	
-	public void setNumAsiento(String numAsiento) {
-		this.numAsiento = numAsiento;
+	public char getLetraAsiento() {
+		return letraAsiento;
 	}
 	
 	public String toString() {
@@ -39,5 +37,11 @@ public class Asiento {
 		
 		return str.toString();
 	}
+	
+	public AsientoOcupado reservar(Persona p) {
+	    this.reservado = true;
+	    return new AsientoOcupado(this.numAsiento, this.letraAsiento, p);
+	}
+
 	
 }

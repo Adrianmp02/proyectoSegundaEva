@@ -4,17 +4,14 @@ import java.util.Scanner;
 
 public class Menu implements MainMenuInterface {
 
-	Avion vuelo1 = new Avion();
+	static Avion avion;
 
-
-	protected Menu() {
-		this.vuelo1 = new Avion();
-	}
 	// Constructor de la clase Menu
 	public static void main(String[] args) throws AvionException, AsientoException {
 
+		avion = new Avion();
+		
 		Menu menu = new Menu();
-        int eleccionOpcion;
 
 		menu.iniciar();
 
@@ -23,7 +20,7 @@ public class Menu implements MainMenuInterface {
 	@Override
 	public void iniciar() throws AvionException, AsientoException {	
 
-		vuelo1.crearAvion();// Crear avión antes de mostrar el menú
+		//avion.crearAvion();// Crear avión antes de mostrar el menú
 		int eleccionOpcion;
 
 		do {
@@ -63,7 +60,7 @@ public class Menu implements MainMenuInterface {
 			System.out.println(str.toString());
 
 			eleccionOpcion = scannerInt();
-			 // Realizar acciones basadas en la opción elegida
+			// Realizar acciones basadas en la opción elegida
 			if(eleccionOpcion == 1) {
 				comprarEntrada();
 			}
@@ -77,7 +74,7 @@ public class Menu implements MainMenuInterface {
 			}
 
 			if(eleccionOpcion == 4) {
-				vuelo1.mostrarAvion();
+				avion.mostrarAvion();
 			}
 
 		}
@@ -86,39 +83,37 @@ public class Menu implements MainMenuInterface {
 		System.out.println("Hasta pronto!!!");
 
 	}
-	 // Método para comprar un billete suelto
+	// Método para comprar un billete suelto
 	@Override
 	public void comprarEntrada() throws AsientoException {
-
-		vuelo1.comprarBillete();
+		Persona p = Persona.crearPersona();
+		avion.reservarAsiento(avion.genAsiento(), p);
 
 	}
-	 // Método para comprar varios billetes
+	// Método para comprar varios billetes
 	@Override
 	public void comprarEntradas() throws AsientoException {
-
-		vuelo1.reservarVariosBilletes();
+		Persona p = Persona.crearPersona();
+		System.out.println("¿Cuantos billetes quieres reservar?");
+		int billetes = scannerInt();
+		avion.reservarVariosBilletes(billetes, p);
 	}
-	 // Método para comprobar si un asiento está libre u ocupado
+	// Método para comprobar si un asiento está libre u ocupado
 	@Override
 	public void comprobarAsiento() throws AsientoException  {
 
 		System.out.println("Dime el asiento que quieres comprobar:");
 		String asiento=scannerString().toUpperCase();;
-		vuelo1.comprobarAsiento(asiento);
+		avion.comprobarAsiento(asiento);
 
 	}
 	// Método para mostrar los asientos del avión
 	@Override
 	public void mostrarAsientos() throws AvionException {
-
-		vuelo1.mostrarAvion();
-
+		avion.mostrarAvion();
 	}
 
-
-
-	 // Método para leer una cadena de entrada del usuario
+	// Método para leer una cadena de entrada del usuario
 	//NO tocar
 	public String scannerString() {
 

@@ -2,237 +2,149 @@ package avion;
 
 import java.util.ArrayList;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Avion implements AvionInterface {
 
-	protected int capacidadMaxima;
-	protected ArrayList<Asiento> asientosPrimera;
-	protected ArrayList<Asiento> asientosTurista;
-	protected ArrayList<Asiento> avionAsientos;
+	private HashMap<String, Asiento> asientos;
 	
-	 // Constructor de la clase Avion
-	protected Avion() {
-		this.capacidadMaxima = 190;
-		this.asientosPrimera = new ArrayList<Asiento>();
-		this.asientosTurista = new ArrayList<Asiento>();
-		this.avionAsientos  = new ArrayList<Asiento>();
+	// Constructor de la clase Avion
+	public Avion() throws AvionException {
+		
+		this.asientos = new HashMap<>();
+		crearAvion();
+		
 	}
 
+	/**
+	 * Crea la estructura del avión asignando asientos libres.
+	 * @throws AvionException Si ya se ha creado previamente un avión.
+	 */
 	@Override
 	public void crearAvion() throws AvionException {
-		// ArrayLists para almacenar la configuración de asientos
-		ArrayList<Integer> filaPrimeraClase;
-		ArrayList<Integer> filaTurista;
-		ArrayList<Character> letraTurista;
-		ArrayList<Character> letraPrimeraClase;
-		
-		// Verifica si ya se ha creado un avión
-		if(!asientosPrimera.isEmpty() || !asientosTurista.isEmpty()) {
+	    // Verificar si ya existe un avión creado
+	    if (!asientos.isEmpty()) {
+	        throw new AvionException("Ya se encuentra un avion creado");
+	    }
 
-			throw new AvionException("Ya se encuentra un avion creado");
+	    // Cambiar a LinkedHashMap para mantener el orden de inserción
+	    asientos = new LinkedHashMap<>();
 
-		}
-		// Inicialización de las listas de filas y letras de asientos
-		filaPrimeraClase = new ArrayList<Integer>();
-		filaTurista = new ArrayList<Integer>();
-		letraTurista = new ArrayList<Character>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F'));
-		letraPrimeraClase = new ArrayList<Character>(Arrays.asList('A', 'B', 'E', 'F'));
-		
+	    // Crear asientos de primera clase (filas 1 a 4) con letras A, B, E, F
+	    for (int numero = 1; numero <= 4; numero++) {
+	        for (char letra : new char[] {'A', 'B', 'E', 'F'}) {
+	            String id = numero + "" + letra;
+	            asientos.put(id, new AsientoLibre(numero, letra, 50.99));
+	        }
+	    }
 
-		//Damos valor a la fila desde el numero 1 hasta el 4
-		for(int i = 1; i <= 4; i++) {
-
-			filaPrimeraClase.add(i);
-
-		}
-
-		//Damos valor a la fila desde el numero 5 hasta el 33
-		for(int i = 0; i <= 33; i++) {
-
-			filaTurista.add(i);
-
-		}
-
-		//Asigancion de asientos Primera Clase
-		for(int i = 0; i < letraPrimeraClase.size(); i++) {
-
-			for(int j = 0; j < 4; j++) {
-
-				Asiento aux = new AsientoLibre(""+filaPrimeraClase.get(j)+letraPrimeraClase.get(i), 50.99);
-
-				asientosPrimera.add(aux);
-
-			}
-
-		}
-
-		//Asignacion de asientos Turista
-		for(int i = 0; i < letraTurista.size(); i++) {
-
-			for(int j = 5; j < filaTurista.size(); j++) {
-
-				Asiento aux = new AsientoLibre(""+filaTurista.get(j)+letraTurista.get(i), 25.99);
-
-				asientosTurista.add(aux);
-
-			}
-
-		}
-
-		for(int i = 0; i < asientosPrimera.size(); i++) {
-
-			avionAsientos.add(asientosPrimera.get(i));
-
-		}
-
-		for(int i = 0; i < asientosTurista.size(); i++) {
-
-			avionAsientos.add(asientosTurista.get(i));
-
-		}
-
+	    // Crear asientos de clase turista (filas 5 a 33) con letras A, B, C, D, E, F
+	    for (int numero = 5; numero <= 33; numero++) {
+	        for (char letra : new char[] {'A', 'B', 'C', 'D', 'E', 'F'}) {
+	            String id = numero + "" + letra;
+	            asientos.put(id, new AsientoLibre(numero, letra, 25.99));
+	        }
+	    }
 	}
-
-	public String toString() {
-
-		int variableP = 0;
-		int tamañoP = 3;
-		int variableT = 0;
-		int tamañoT = 28;
-
-		StringBuffer str = new StringBuffer();
-		str.append("A  ");
-
-		for(int j = variableP; j <= tamañoP; j++) {
-
-			str.append(asientosPrimera.get(j).toString());
-
-		}
-
-		str.append(" |");
-		str.append(" A  ");
-
-		for(int j = variableT; j <= tamañoT; j++) {
-
-			str.append(asientosTurista.get(j).toString());
-		}
-
-		//-----------------------------------------------------------------------------------//
-
-		variableP += 4;
-		tamañoP += 4;
-		variableT += 29;
-		tamañoT += 29;
-
-		str.append("\n");
-		str.append("B  ");
-
-		for(int j = variableP; j <= tamañoP; j++) {
-
-			str.append(asientosPrimera.get(j).toString());
-
-		}
-
-		str.append(" |");
-		str.append(" B  ");
-
-		for(int j = variableT; j <= tamañoT;j++) {
-
-			str.append(asientosTurista.get(j).toString());
-
-		}
-
-		str.append(" 🚻");
-		str.append("\n");
-
-		//-----------------------------------------------------------------------------------//
-
-		variableT += 29;
-		tamañoT += 29;
-
-		str.append("◀🚻                 |");
-		str.append(" C  ");
-
-		for(int j = variableT; j <= tamañoT;j++) {
-
-			str.append(asientosTurista.get(j).toString());
-
-		}
-
-		str.append("\n");
-		str.append("\n");
-
-		//-----------------------------------------------------------------------------------//
-
-		variableT += 29;
-		tamañoT += 29;
-
-		str.append("◀🚻                 |");
-		str.append(" D  ");
-
-		for(int j = variableT; j <= tamañoT;j++) {
-
-			str.append(asientosTurista.get(j).toString());
-
-		}
-
-		//-----------------------------------------------------------------------------------//
-
-		variableP += 4;
-		tamañoP += 4;
-		variableT += 29;
-		tamañoT += 29;
-
-		str.append("\n");
-		str.append("E  ");
-
-		for(int j = variableP; j <= tamañoP; j++) {
-
-			str.append(asientosPrimera.get(j).toString());
-
-		}
-
-		str.append(" |");
-		str.append(" E  ");
-
-		for(int j = variableT; j <= tamañoT;j++) {
-
-			str.append(asientosTurista.get(j).toString());
-		}
-
-		str.append(" 🚻");
-
-		//-----------------------------------------------------------------------------------//
-
-		variableP += 4;
-		tamañoP += 4;
-		variableT += 29;
-		tamañoT += 29;
-
-		str.append("\n");
-		str.append("F  ");
-
-		for(int j = variableP; j <= tamañoP; j++) {
-
-			str.append(asientosPrimera.get(j).toString());
-
-		}
-
-		str.append(" |");
-		str.append(" F  ");
-
-		for(int j = variableT; j <= tamañoT;j++) {
-
-			str.append(asientosTurista.get(j).toString());
-
-		}
 	
-		str.append("\n");
-
-		return str.toString();
+	public Asiento getAsiento(String numAsiento) {
+	    return asientos.get(numAsiento);
 	}
+
+
+	
+	/**
+	 * Devuelve un HashMap que contiene los asientos del proyecto, donde cada asiento
+	 * se identifica por una cadena de texto y se asigna a un objeto de tipo Asiento.
+	 * @return HashMap<String, Asiento> Un mapeo de cadenas de texto a objetos Asiento.
+	 */
+	public HashMap<String, Asiento> getAsientos() {
+	    return asientos;
+	}	
+	
+	/**
+	 * Devuelve un HashMap que contiene los asientos libres del proyecto, donde cada asiento
+	 * libre se identifica por una cadena de texto y se asigna a un objeto de tipo AsientoLibre.
+	 * @return HashMap<String, AsientoLibre> Un mapeo de cadenas de texto a objetos AsientoLibre.
+	 */
+	public HashMap<String, AsientoLibre> getAsientosLibres() {
+	    // Se crea un nuevo HashMap para almacenar los asientos libres.
+	    HashMap<String, AsientoLibre> asientosLibres = new HashMap<>();
+	    
+	    // Se itera sobre el HashMap de asientos existentes.
+	    for (HashMap.Entry<String, Asiento> entry : asientos.entrySet()) {
+	        // Si el valor correspondiente a la clave es una instancia de AsientoLibre, se agrega al HashMap de asientos libres.
+	        if (entry.getValue() instanceof AsientoLibre) {
+	            asientosLibres.put(entry.getKey(), (AsientoLibre) entry.getValue());
+	        }
+	    }
+	    
+	    // Se devuelve el HashMap que contiene los asientos libres.
+	    return asientosLibres;
+	}
+
+
+
+	@Override
+	public String toString() {
+		
+	    StringBuilder str = new StringBuilder();
+	    str.append("Estado de los Asientos del Avión:\n");
+	    str.append("--------------------------------\n");
+
+	    // Asientos de Primera Clase
+	    str.append("Primera Turista VIP:\n");
+	    str.append(estadoFilaAsientosHorizontal(1, 4, new char[]{'A', 'B', 'E', 'F'}));
+	    str.append("\n");
+
+	    // Asientos de Clase Turista
+	    str.append("Clase Turista:\n");
+	    str.append(estadoFilaAsientosHorizontal(5, 33, new char[]{'A', 'B', 'C', 'D', 'E', 'F'}));
+
+	    str.append("--------------------------------\n");
+	    return str.toString();
+	}
+
+	/**
+	 * Genera una representación en forma de cadena de una fila de asientos horizontales dentro del rango especificado,
+	 * identificados por números y letras.
+	 * @param inicio El número inicial de asiento en la fila.
+	 * @param fin El número final de asiento en la fila.
+	 * @param letras El conjunto de letras que identifican los asientos en la fila.
+	 * @return String Una cadena que representa el estado de los asientos en la fila.
+	 */
+	private String estadoFilaAsientosHorizontal(int inicio, int fin, char[] letras) {
+	    // Se crea un StringBuilder para construir la representación de la fila de asientos.
+	    StringBuilder strFila = new StringBuilder();
+	    
+	    // Itera sobre los números de asiento en la fila.
+	    for (int numero = inicio; numero <= fin; numero++) {
+	        // Agrega el número de asiento seguido de dos puntos y un espacio.
+	        strFila.append(numero).append(": ");
+	        
+	        // Itera sobre las letras que identifican los asientos en la fila.
+	        for (char letra : letras) {
+	            // Construye el ID del asiento combinando el número y la letra.
+	            String id = numero + "" + letra;
+	            // Obtiene el asiento correspondiente al ID del HashMap de asientos.
+	            Asiento asiento = asientos.get(id);
+	            // Si se encuentra un asiento, se agrega su representación a la cadena.
+	            if (asiento != null) {
+	                strFila.append(id).append(asiento.toString()).append(" ");
+	            }
+	        }
+	        
+	        // Agrega un salto de línea al final de la fila.
+	        strFila.append("\n");
+	    }
+	    
+	    // Devuelve la representación de la fila de asientos como una cadena.
+	    return strFila.toString();
+	}
+
 
 	@Override
 	public void mostrarAvion() throws AvionException {
@@ -241,326 +153,166 @@ public class Avion implements AvionInterface {
 
 	}
 
+	/**
+	 * Comprueba si un asiento específico está disponible o no.
+	 * @param numAsiento El número de asiento a comprobar.
+	 * @throws AsientoException Si el asiento no es válido o no está disponible.
+	 */
 	@Override
 	public void comprobarAsiento(String numAsiento) throws AsientoException {
-		
-		avionAsientos = new ArrayList<Asiento>();
-		
-		for(int i = 0; i < asientosPrimera.size(); i++) {
+	    // Convierte el número de asiento a mayúsculas para asegurar la consistencia.
+	    numAsiento = numAsiento.toUpperCase();
+	    System.out.println("Comprobando asiento: " + numAsiento);
 
-			avionAsientos.add(asientosPrimera.get(i));
+	    // Verifica si el número de asiento buscado está presente en el conjunto de asientos.
+	    if (!asientos.containsKey(numAsiento)) {
+	        System.out.println("Asiento no encontrado: " + numAsiento);
+	        // Lanza una excepción si el asiento no es válido.
+	        throw new AsientoException("Asiento no válido");
+	    }
 
-		}
+	    // Obtiene el objeto Asiento correspondiente al número de asiento.
+	    Asiento asiento = asientos.get(numAsiento);
 
-		for(int i = 0; i < asientosTurista.size(); i++) {
-
-			avionAsientos.add(asientosTurista.get(i));
-
-		}
-
-		boolean flag = true;
-
-		for(int i = 0; i < avionAsientos.size(); i++) {
-			if(!numAsiento.toUpperCase().equals(avionAsientos.get(i).getNumAsiento())) {
-				flag = false;
-			}else {
-				flag = true;
-				break;
-			}
-		}
-		
-		if(!flag) {
-			throw new AsientoException("Asiento no valido");
-		}
-		
-		boolean flagReservar = false;
-		
-		for(int i = 0; i < avionAsientos.size(); i++) {
-			if(numAsiento.toUpperCase().equals(avionAsientos.get(i).getNumAsiento())) {
-				if(avionAsientos.get(i).reservado) {
-					flagReservar = true;
-				}
-			}
-		}
-		if(flagReservar) {
-			System.out.println("El asiento: "+numAsiento+" no esta disponible");
-		}else {
-			System.out.println("El asiento: "+numAsiento+" esta disponible");
-		}
+	    // Comprueba si el asiento está disponible.
+	    if (asientoDisponible(asiento)) {
+	        System.out.println("El asiento: " + numAsiento + " no está disponible");
+	    } else {
+	        System.out.println("El asiento: " + numAsiento + " está disponible");
+	    }
 	}
 
+
+	/**
+	 * Reserva un asiento específico para una persona dada.
+	 * @param numAsiento El número de asiento a reservar.
+	 * @param p La persona para la cual se está reservando el asiento.
+	 * @throws AsientoException Si el asiento no está en el rango informado o si ya está ocupado.
+	 */
 	@Override
-	public void reservarAsiento(String numAsiento, Persona comprador) throws AsientoException {
+	public void reservarAsiento(String numAsiento, Persona p) throws AsientoException {
+	    // Verifica si el asiento buscado está presente en el conjunto de asientos.
+	    if (!asientos.containsKey(numAsiento)) {
+	        throw new AsientoException("El asiento que quieres reservar no está en el rango informado");
+	    }
 
-		Asiento cambio = new AsientoOcupado(numAsiento, comprador);
-		boolean isFirstClass = false;
-		boolean flagAsientoValido = true;
-		for(int i = 0; i < avionAsientos.size(); i++) {
-			if(!numAsiento.toUpperCase().equals(avionAsientos.get(i).getNumAsiento())) {
-				flagAsientoValido = false;
-			}else {
-				flagAsientoValido = true;
-				break;
-			}
-		}
-		if(!flagAsientoValido) {
-			throw new AsientoException("Asiento no valido");
-		}
-		//Array con asientos de Primera Clase
-		String[] array = {"1A","2A","3A","4A","1B","2B","3B","4B","1E","2E","3E","4E","1F","2F","3F","4F"};
-		//Identifica el tipo de asiento que se quiere reservar
-		for (int i = 0; i < array.length; i++) {
-			if(numAsiento.toUpperCase().equals(array[i])) {
-				isFirstClass = true;
-				break;
-			}
-		}
-		if(isFirstClass) {
-			//Si es asiento de Primera Clase, busca el asiento libre y lo cambia por un Asiento Ocupado
-			for(int i = 0; i < asientosPrimera.size(); i++) {
-				if(asientosPrimera.get(i).getNumAsiento().equals(numAsiento)) {
-					if(asientosPrimera.get(i).isReservado() != true) {
-						asientosPrimera.set(i, cambio);
-						return;
-					}else {
-						System.out.println("El asiento esta ocupado. Ingrese otro distinto");
-						comprarBillete();
-					}
-				}
-			}
-		}else {
-			//Si es asiento Turista, busca el asiento libre y lo cambia por un Asiento Ocupado
-			for(int i = 0; i < asientosTurista.size(); i++) {
-				if(asientosTurista.get(i).getNumAsiento().equals(numAsiento)) {
-					if(asientosTurista.get(i).isReservado() != true) {
-						asientosTurista.set(i, cambio);
-						return;
-					}else {
-						System.out.println("El asiento esta ocupado. Ingrese otro distinto");
-						comprarBillete();
-					}
-				}
-			} 
-		}
-	}
+	    // Obtiene el objeto Asiento correspondiente al número de asiento.
+	    Asiento asiento = asientos.get(numAsiento);
 
-	public void comprarBillete() throws AsientoException {
+	    // Verifica si el asiento está ocupado.
+	    if (asiento.estaReservado()) {
+	        throw new AsientoException("El asiento ya está ocupado");
+	    }
 
-		System.out.println("Dime el asiento que quieres reservar:");
+	    // Verifica si el asiento es de tipo AsientoLibre.
+	    if (!(asiento instanceof AsientoLibre)) {
+	        throw new AsientoException("El asiento no es de tipo AsientoLibre y no se puede reservar");
+	    }
 
-		String vuelo = scannerString();
-		vuelo = vuelo.toUpperCase();
+	    // Realiza la reserva del asiento.
+	    AsientoLibre asientoLibre = (AsientoLibre) asiento;
+	    AsientoOcupado asientoOcupado = asientoLibre.reservar(p);
 
-		boolean comp = true; //Flag, por defecto true ya que suponemos que el asiento es correcto
-		for(int excp = 0; excp < avionAsientos.size(); excp++) {
-			if(!vuelo.equals(avionAsientos.get(excp).getNumAsiento())) {
-				comp = false; //Si el asiento introducido no corresponde con ninguno la flag pasa a false
-			}else {
-				comp = true; //Si alguno coincide pasa a true y sale del bucle
-				break;
-			}
-		}
+	    // Actualiza el asiento en el mapa de asientos con el asiento ocupado.
+	    asientos.put(numAsiento, asientoOcupado);
 
-		//Si la flag es false, lanza excepcion
-		if(!comp) {
-			throw new AsientoException("El asiento que quieres reservar no esta en el rango informado");
-		}
-
-		Persona p = Persona.crearPersona();
-
-		for(int j = 0; j < avionAsientos.size(); j++) {
-			if(vuelo.equals(avionAsientos.get(j).getNumAsiento())) {
-				reservarAsiento(vuelo, p);
-			}
-		}
-
-		System.out.println("De parte de David, te agradecemos la compra");
-
+	    // Mostrar el asiento reservado y su precio por pantalla
+	    System.out.println("Has reservado el asiento: " + numAsiento);
+	    System.out.println("Por un precio de: " + asientoLibre.getPrecio());
+	    System.out.println("De parte de David, te agradecemos la compra");
 	}
 
 
-	public void reservarVariosBilletes() throws AsientoException {
 
-		System.out.println("¿Cuantos billetes quieres reservar?");
-		int numBilletes = scannerInt();
 
-		Persona p = Persona.crearPersona();
+	/**
+	 * Reserva varios billetes contiguos para una persona dada.
+	 * @param cantidadBilletes La cantidad de billetes que se desea reservar.
+	 * @param p La persona para la cual se están reservando los billetes.
+	 * @throws AsientoException Si no se encuentran suficientes asientos contiguos disponibles.
+	 */
+	protected void reservarVariosBilletes(int cantidadBilletes, Persona p) throws AsientoException {
+	    // Lista para almacenar los asientos disponibles.
+	    ArrayList<Asiento> asientosDisponibles = new ArrayList<>();
+	    
+	    // Itera sobre todos los asientos para encontrar los disponibles.
+	    for (Asiento asiento : asientos.values()) {
+	        if (!asiento.estaReservado()) {
+	            asientosDisponibles.add(asiento);
+	        }
+	    }
 
-		if(numBilletes == 1){
-			comprarBillete();
-			return;
-		}
+	    // Obtiene los bloques contiguos de asientos disponibles.
+	    ArrayList<ArrayList<Asiento>> bloquesAsientosDisponibles = obtenerBloquesContiguos(asientosDisponibles, cantidadBilletes);
 
-		int contador = 0;
-		for (int i = 0; i < asientosTurista.size(); i++) {
-			if(!asientosTurista.get(i).reservado) {
-				contador++;
-			}
-		}
+	    // Si no se encuentran bloques contiguos suficientes, lanza una excepción.
+	    if (bloquesAsientosDisponibles.isEmpty()) {
+	        throw new AsientoException("No se encontraron suficientes asientos contiguos para reservar");
+	    }
 
-		if(numBilletes <= contador) {
+	    // Tomar el primer bloque encontrado de asientos disponibles.
+	    ArrayList<Asiento> asientosReservados = bloquesAsientosDisponibles.get(0);
 
-			int veces = bucleDeAsientos(numBilletes, p);
+	    // Reserva los asientos del bloque para la persona dada.
+	    for (Asiento asiento : asientosReservados) {
+	        asiento.reservar(p);
+	    }
+	    
+	    
+	    System.out.println("De parte de David, te agradecemos la compra");
+	}
 
-			while(veces != 0) {
+	/**
+	 * Obtiene bloques contiguos de asientos disponibles dado un conjunto de asientos disponibles y la cantidad deseada de asientos contiguos.
+	 * @param asientosDisponibles Lista de asientos disponibles.
+	 * @param cantidadBilletes La cantidad de asientos contiguos deseada.
+	 * @return ArrayList<ArrayList<Asiento>> Lista de bloques contiguos de asientos disponibles.
+	 */
+	protected ArrayList<ArrayList<Asiento>> obtenerBloquesContiguos(ArrayList<Asiento> asientosDisponibles, int cantidadBilletes) {
+	    // Lista para almacenar los bloques contiguos de asientos.
+	    ArrayList<ArrayList<Asiento>> bloquesContiguos = new ArrayList<>();
 
-				veces = bucleDeAsientos(veces, p);
+	    // Verificar si hay suficientes asientos disponibles para formar bloques.
+	    if (cantidadBilletes > asientosDisponibles.size()) {
+	        // No hay suficientes asientos disponibles para formar bloques.
+	        return bloquesContiguos; // Devolver lista vacía
+	    }
 
-			}
+	    // Inicializar la ventana deslizante.
+	    int ventanaInicio = 0;
+	    int ventanaFin = cantidadBilletes;
 
-		}else {
-			System.out.println("No hay suficientes asientos libres");
-			reservarVariosBilletes();
-		}
+	    // Mover la ventana deslizante a lo largo de la lista de asientos disponibles.
+	    while (ventanaFin <= asientosDisponibles.size()) {
+	        // Crear un nuevo bloque contiguo de asientos dentro de la ventana actual.
+	        ArrayList<Asiento> bloqueActual = new ArrayList<>(asientosDisponibles.subList(ventanaInicio, ventanaFin));
+	        bloquesContiguos.add(bloqueActual);
 
+	        // Deslizar la ventana una posición hacia adelante.
+	        ventanaInicio++;
+	        ventanaFin++;
+	    }
+
+	    return bloquesContiguos;
 	}
 
 
-	public int logicaAsientos(int numBilletes, Persona p) throws AsientoException {
-
-		int asientosTotales = 0;
-		int seguir = 0;
-		Asiento aux = null;
+	/**
+	 * Comprueba si un asiento está disponible (no está reservado).
+	 * @param asiento El asiento a comprobar.
+	 * @return boolean true si el asiento está disponible, false si está reservado.
+	 */
+	public boolean asientoDisponible(Asiento asiento) {
 		
-		int contador = 0;
-		for (int i = 0; i < asientosTurista.size(); i++) {
-			if(!asientosTurista.get(i).reservado) {
-				contador++;
-			}
-		}
-
-		if(numBilletes != contador) {
-
-			boolean salir = false;
-			for (int i = 0; i < 33; i++) {
-
-				int a = i;
-				if(salir == true) {
-					break;
-				}
-				for (int j = 0; j < 6; j++) {
-					asientosTotales++;
-					if(!asientosTurista.get(a).reservado) {
-						seguir++;
-						if(seguir == 1) {
-							aux = asientosTurista.get(a);
-						}
-						a+=29;
-					}else {
-						a+=29;
-						seguir = 0;
-					}
-					if(seguir == numBilletes) {
-						salir = true;
-						break;
-					}
-				}
-
-				if(asientosTotales == 175) {
-					seguir = 0;
-					break;
-				}
-			}
-
-			if(seguir == 0) {
-
-				System.out.println("Si llego hasta aqui");
-				return 0;
-
-			}else {
-
-				boolean reservar = false;
-				int reservado = 0;
-				if(seguir == numBilletes) {
-					for (int i = 0; i < 33; i++) {
-						int b = i;
-						for (int j = 0; j < 6; j++) {
-							if(reservado != numBilletes) {
-								if(asientosTurista.get(b) == aux) {
-									reservar = true;
-								}
-								if(reservar) {
-									reservarAsiento(asientosTurista.get(b).numAsiento, p);
-									b+=29;
-									reservado++;
-								}else {
-									b+=29;
-								}
-							}
-						}
-					}
-				}
-			}
-		}else {
-			
-			boolean salir = false;
-			for (int i = 0; i < 33; i++) {
-
-				int a = i;
-				if(salir == true) {
-					break;
-				}
-				for (int j = 0; j < 6; j++) {
-					
-					if(!asientosTurista.get(a).reservado) {
-						seguir++;
-						if(seguir == 1) {
-							aux = asientosTurista.get(a);
-						}
-						a+=29;
-					}else {
-						a+=29;
-						seguir = 0;
-					}
-					if(seguir == numBilletes) {
-						salir = true;
-						break;
-					}
-				}
-			}
-					
-			boolean reservar = false;
-			int reservado = 0;
-			if(seguir == numBilletes) {
-				for (int i = 0; i < 33; i++) {
-					int b = i;
-					for (int j = 0; j < 6; j++) {
-						if(reservado != numBilletes) {
-							if(asientosTurista.get(b) == aux) {
-								reservar = true;
-							}
-							if(reservar) {
-								reservarAsiento(asientosTurista.get(b).numAsiento, p);
-								b+=29;
-								reservado++;
-							}else {
-								b+=29;
-							}
-						}
-					}
-				}
-			}
-		}
-		return 1;
-
+		return !asiento.estaReservado();
+		
+	    
 	}
 
-	public int bucleDeAsientos(int numBilletes, Persona p) throws AsientoException {
-
-		int num = logicaAsientos(numBilletes, p);
-		int conteo = 0;
-
-		while(num == 0) {
-
-			numBilletes--;
-			conteo++;
-			num = logicaAsientos(numBilletes, p);
-
-		}
-
-		return conteo;
-	}
-
+	
+	
+	
+	
 	//NO tocar
 	public String scannerString() {
 
@@ -580,5 +332,14 @@ public class Avion implements AvionInterface {
 
 		return n;
 
+	}
+
+	public String genAsiento() {
+
+		System.out.println("Dime el asiento que quieres reservar:");
+
+		String vuelo = scannerString();
+
+		return vuelo;
 	}
 }

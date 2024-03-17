@@ -2,9 +2,9 @@ package avion;
 
 public class AsientoLibre extends Asiento {
 
-	private double precio;
-	public AsientoLibre(String num, double precio) {
-		super(num);
+	protected double precio;
+	public AsientoLibre(int num, char letra, double precio) {
+		super(num, letra);
 		this.reservado = false;
 		this.precio = precio;
 	}
