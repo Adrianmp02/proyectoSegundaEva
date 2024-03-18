@@ -10,7 +10,7 @@ public class Menu implements MainMenuInterface {
 	public static void main(String[] args) throws AvionException, AsientoException {
 
 		avion = new Avion();
-		
+
 		Menu menu = new Menu();
 
 		menu.iniciar();
@@ -86,9 +86,18 @@ public class Menu implements MainMenuInterface {
 	// Método para comprar un billete suelto
 	@Override
 	public void comprarEntrada() throws AsientoException {
-		Persona p = Persona.crearPersona();
-		avion.reservarAsiento(avion.genAsiento(), p);
 
+		Persona p = Persona.crearPersona();
+
+		try {
+
+			avion.reservarAsiento(avion.genAsiento(), p);
+
+		} catch (Exception AsientoException) {
+
+			avion.reservarAsiento(avion.genAsiento(), p);
+		}
+		
 	}
 	// Método para comprar varios billetes
 	@Override
@@ -96,21 +105,50 @@ public class Menu implements MainMenuInterface {
 		Persona p = Persona.crearPersona();
 		System.out.println("¿Cuantos billetes quieres reservar?");
 		int billetes = scannerInt();
-		avion.reservarVariosBilletes(billetes, p, 0);
+		try {
+
+			avion.reservarVariosBilletes(billetes, p, 0);
+
+		} catch (Exception AsientoException) {
+			System.out.println("¿Cuantos billetes quieres reservar?");
+			int billetes2 = scannerInt();
+			avion.reservarVariosBilletes(billetes2, p, 0);
+		}
 	}
 	// Método para comprobar si un asiento está libre u ocupado
 	@Override
 	public void comprobarAsiento() throws AsientoException  {
-
+		
 		System.out.println("Dime el asiento que quieres comprobar:");
-		String asiento=scannerString().toUpperCase();;
-		avion.comprobarAsiento(asiento);
+		String asiento=scannerString().toUpperCase();
+		
+		try {
+
+			avion.comprobarAsiento(asiento);
+
+		} catch (Exception AsientoException) {
+			
+			System.out.println("Dime el asiento que quieres comprobar:");
+			String asiento2=scannerString().toUpperCase();
+			avion.comprobarAsiento(asiento2);
+		}
+
 
 	}
 	// Método para mostrar los asientos del avión
 	@Override
 	public void mostrarAsientos() throws AvionException {
-		avion.mostrarAvion();
+		
+		try {
+
+			avion.mostrarAvion();
+
+		} catch (Exception AsientoException) {
+			
+			System.out.println("Avion no creado");
+		}
+		
+		
 	}
 
 	// Método para leer una cadena de entrada del usuario
