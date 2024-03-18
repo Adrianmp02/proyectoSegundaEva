@@ -19,7 +19,7 @@ public class Avion implements AvionInterface {
 		crearAvion();
 
 	}
-
+	
 	/**
 	 * Crea la estructura del avión asignando asientos libres.
 	 * @throws AvionException Si ya se ha creado previamente un avión.
@@ -46,7 +46,11 @@ public class Avion implements AvionInterface {
 		for (int numero = 5; numero <= 33; numero++) {
 			for (char letra : new char[] {'A', 'B', 'C', 'D', 'E', 'F'}) {
 				String id = numero + "" + letra;
-				asientos.put(id, new AsientoLibre(numero, letra, 25.99));
+				if(id.equals("14A")) {
+					asientos.put(id, new AsientoLibre(numero, letra, 33.00));
+				}else {
+					asientos.put(id, new AsientoLibre(numero, letra, 25.99));
+				}
 			}
 		}
 	}
@@ -176,7 +180,7 @@ public class Avion implements AvionInterface {
 		Asiento asiento = asientos.get(numAsiento);
 
 		// Comprueba si el asiento está disponible.
-		if (asientoDisponible(asiento)) {
+		if (!asientoDisponible(asiento)) {
 			System.out.println("El asiento: " + numAsiento + " no está disponible");
 		} else {
 			System.out.println("El asiento: " + numAsiento + " está disponible");
@@ -233,7 +237,7 @@ public class Avion implements AvionInterface {
 	 * @param p La persona para la cual se están reservando los billetes.
 	 * @throws AsientoException Si no se encuentran suficientes asientos contiguos disponibles.
 	 */
-	
+
 	protected void reservarVariosBilletes(int cantidadBilletes, Persona p, int restantes) throws AsientoException {
 
 		int disponibles = 0;
@@ -263,12 +267,17 @@ public class Avion implements AvionInterface {
 				asientosAReservarHector = new ArrayList<>();
 				seguidos = 0;
 			}
-			
+
 			if(cantidadBilletes == asientosAReservarHector.size() && seguidos == cantidadBilletes) {
 				resto = true;
 				for (int i = 0; i < asientosAReservarHector.size(); i++) {
-					asientosAReservarHector.get(i).reservar(p);
-			    }
+					
+					AsientoOcupado asientoOcupado = asientosAReservarHector.get(i).reservar(p);
+
+					// Actualiza el asiento en el mapa de asientos con el asiento ocupado.
+					asientos.put(asientosAReservarHector.get(i).numAsiento +""+ asientosAReservarHector.get(i).letraAsiento, asientoOcupado);
+					
+				}
 				if(restantes == 0) {
 					System.out.println("De parte de David, te agradecemos la compra");
 				}
@@ -296,7 +305,7 @@ public class Avion implements AvionInterface {
 			reservarVariosBilletes(restantes, p, 0);
 		}
 
-		
+
 	}
 
 	/**

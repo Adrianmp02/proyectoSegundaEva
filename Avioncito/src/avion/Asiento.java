@@ -42,6 +42,8 @@ public class Asiento {
 	    this.reservado = true;
 	    return new AsientoOcupado(this.numAsiento, this.letraAsiento, p);
 	}
+	
+	
 
 	
 }

@@ -9,6 +9,4 @@ public class AsientoOcupado extends Asiento {
 		this.p = p;
 		this.reservado = true;
 	}
-
-	
 }

@@ -26,6 +26,7 @@ public class Menu implements MainMenuInterface {
 		do {
 			StringBuffer str = new StringBuffer();// Utilizando StringBuffer para construir el menú dinámicamente
 			// Construcción del menú
+			str.append("\n");
 			str.append("✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈✈✈✈");
 			str.append("\n||                              ||");
 			str.append("\n||      ELIJA UNA OPCIÒN:       ||");
@@ -83,6 +84,7 @@ public class Menu implements MainMenuInterface {
 		System.out.println("Hasta pronto!!!");
 
 	}
+	
 	// Método para comprar un billete suelto
 	@Override
 	public void comprarEntrada() throws AsientoException {
