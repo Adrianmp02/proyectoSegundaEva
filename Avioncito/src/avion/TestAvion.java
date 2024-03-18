@@ -153,7 +153,7 @@ public class TestAvion {
 	@Test
 	public void reservarAsientosContiguosExitosamente() throws AsientoException {
 		int cantidadBilletes = 3; // Cantidad de asientos a reservar
-		avion.reservarVariosBilletes(cantidadBilletes, new Persona("12345678A", "Juan", "Perez", 30));
+		avion.reservarVariosBilletes(cantidadBilletes, new Persona("12345678A", "Juan", "Perez", 30), 0);
 		// Verifica que los asientos han sido reservados.
 
 	}
@@ -161,7 +161,7 @@ public class TestAvion {
 	@Test
 	public void testReservarTodosAsientosDisponibles() {
 	    try {
-	        avion.reservarVariosBilletes(191, new Persona("12345678A", "Juan", "García", 30));
+	        avion.reservarVariosBilletes(191, new Persona("12345678A", "Juan", "García", 30), 0);
 	        fail("Se esperaba una AsientoException porque no hay suficientes asientos disponibles.");
 	    } catch (AsientoException e) {
 	        assertEquals("No se encontraron suficientes asientos contiguos para reservar", e.getMessage());
@@ -171,7 +171,7 @@ public class TestAvion {
 	@Test
 	public void testReservarAlgunosAsientosDisponibles() {
 	    try {
-	        avion.reservarVariosBilletes(5, new Persona("12345678B", "María", "López", 25));
+	        avion.reservarVariosBilletes(5, new Persona("12345678B", "María", "López", 25), 0);
 	        System.out.println("Reserva exitosa");
 	    } catch (AsientoException e) {
 	        fail("No debería lanzar una excepción si hay suficientes asientos disponibles.");
@@ -188,7 +188,7 @@ public class TestAvion {
 	    
 	    // Intentamos reservar más asientos
 	    try {
-	        avion.reservarVariosBilletes(5, new Persona("12345678C", "David", "Pérez", 40));
+	        avion.reservarVariosBilletes(5, new Persona("12345678C", "David", "Pérez", 40), 0);
 	        fail("Se esperaba una AsientoException porque todos los asientos ya están reservados.");
 	    } catch (AsientoException e) {
 	        assertEquals("No se encontraron suficientes asientos contiguos para reservar", e.getMessage());

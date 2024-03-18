@@ -26,7 +26,7 @@ public class Menu implements MainMenuInterface {
 		do {
 			StringBuffer str = new StringBuffer();// Utilizando StringBuffer para construir el menú dinámicamente
 			// Construcción del menú
-			str.append("✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈");
+			str.append("✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈✈✈✈✈");
 			str.append("\n||                              ||");
 			str.append("\n||      ELIJA UNA OPCIÒN:       ||");
 			str.append("\n");
@@ -55,7 +55,7 @@ public class Menu implements MainMenuInterface {
 			str.append("             ||");
 			str.append("\n||                              ||");
 			str.append("\n||                              ||");
-			str.append("\n✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈️✈️✈️✈️✈️✈✈");
+			str.append("\n✈️✈️✈️✈️✈️✈️✈️✈️✈️✈✈️✈️✈️✈️✈️✈✈✈✈✈✈");
 
 			System.out.println(str.toString());
 
@@ -96,7 +96,7 @@ public class Menu implements MainMenuInterface {
 		Persona p = Persona.crearPersona();
 		System.out.println("¿Cuantos billetes quieres reservar?");
 		int billetes = scannerInt();
-		avion.reservarVariosBilletes(billetes, p);
+		avion.reservarVariosBilletes(billetes, p, 0);
 	}
 	// Método para comprobar si un asiento está libre u ocupado
 	@Override

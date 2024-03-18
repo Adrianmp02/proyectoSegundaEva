@@ -4,19 +4,20 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Avion implements AvionInterface {
 
 	private HashMap<String, Asiento> asientos;
-	
+
 	// Constructor de la clase Avion
 	public Avion() throws AvionException {
-		
+
 		this.asientos = new HashMap<>();
 		crearAvion();
-		
+
 	}
 
 	/**
@@ -25,87 +26,87 @@ public class Avion implements AvionInterface {
 	 */
 	@Override
 	public void crearAvion() throws AvionException {
-	    // Verificar si ya existe un avión creado
-	    if (!asientos.isEmpty()) {
-	        throw new AvionException("Ya se encuentra un avion creado");
-	    }
+		// Verificar si ya existe un avión creado
+		if (!asientos.isEmpty()) {
+			throw new AvionException("Ya se encuentra un avion creado");
+		}
 
-	    // Cambiar a LinkedHashMap para mantener el orden de inserción
-	    asientos = new LinkedHashMap<>();
+		// Cambiar a LinkedHashMap para mantener el orden de inserción
+		asientos = new LinkedHashMap<>();
 
-	    // Crear asientos de primera clase (filas 1 a 4) con letras A, B, E, F
-	    for (int numero = 1; numero <= 4; numero++) {
-	        for (char letra : new char[] {'A', 'B', 'E', 'F'}) {
-	            String id = numero + "" + letra;
-	            asientos.put(id, new AsientoLibre(numero, letra, 50.99));
-	        }
-	    }
+		// Crear asientos de primera clase (filas 1 a 4) con letras A, B, E, F
+		for (int numero = 1; numero <= 4; numero++) {
+			for (char letra : new char[] {'A', 'B', 'E', 'F'}) {
+				String id = numero + "" + letra;
+				asientos.put(id, new AsientoLibre(numero, letra, 50.99));
+			}
+		}
 
-	    // Crear asientos de clase turista (filas 5 a 33) con letras A, B, C, D, E, F
-	    for (int numero = 5; numero <= 33; numero++) {
-	        for (char letra : new char[] {'A', 'B', 'C', 'D', 'E', 'F'}) {
-	            String id = numero + "" + letra;
-	            asientos.put(id, new AsientoLibre(numero, letra, 25.99));
-	        }
-	    }
+		// Crear asientos de clase turista (filas 5 a 33) con letras A, B, C, D, E, F
+		for (int numero = 5; numero <= 33; numero++) {
+			for (char letra : new char[] {'A', 'B', 'C', 'D', 'E', 'F'}) {
+				String id = numero + "" + letra;
+				asientos.put(id, new AsientoLibre(numero, letra, 25.99));
+			}
+		}
 	}
-	
+
 	public Asiento getAsiento(String numAsiento) {
-	    return asientos.get(numAsiento);
+		return asientos.get(numAsiento);
 	}
 
 
-	
+
 	/**
 	 * Devuelve un HashMap que contiene los asientos del proyecto, donde cada asiento
 	 * se identifica por una cadena de texto y se asigna a un objeto de tipo Asiento.
 	 * @return HashMap<String, Asiento> Un mapeo de cadenas de texto a objetos Asiento.
 	 */
 	public HashMap<String, Asiento> getAsientos() {
-	    return asientos;
+		return asientos;
 	}	
-	
+
 	/**
 	 * Devuelve un HashMap que contiene los asientos libres del proyecto, donde cada asiento
 	 * libre se identifica por una cadena de texto y se asigna a un objeto de tipo AsientoLibre.
 	 * @return HashMap<String, AsientoLibre> Un mapeo de cadenas de texto a objetos AsientoLibre.
 	 */
 	public HashMap<String, AsientoLibre> getAsientosLibres() {
-	    // Se crea un nuevo HashMap para almacenar los asientos libres.
-	    HashMap<String, AsientoLibre> asientosLibres = new HashMap<>();
-	    
-	    // Se itera sobre el HashMap de asientos existentes.
-	    for (HashMap.Entry<String, Asiento> entry : asientos.entrySet()) {
-	        // Si el valor correspondiente a la clave es una instancia de AsientoLibre, se agrega al HashMap de asientos libres.
-	        if (entry.getValue() instanceof AsientoLibre) {
-	            asientosLibres.put(entry.getKey(), (AsientoLibre) entry.getValue());
-	        }
-	    }
-	    
-	    // Se devuelve el HashMap que contiene los asientos libres.
-	    return asientosLibres;
+		// Se crea un nuevo HashMap para almacenar los asientos libres.
+		HashMap<String, AsientoLibre> asientosLibres = new HashMap<>();
+
+		// Se itera sobre el HashMap de asientos existentes.
+		for (HashMap.Entry<String, Asiento> entry : asientos.entrySet()) {
+			// Si el valor correspondiente a la clave es una instancia de AsientoLibre, se agrega al HashMap de asientos libres.
+			if (entry.getValue() instanceof AsientoLibre) {
+				asientosLibres.put(entry.getKey(), (AsientoLibre) entry.getValue());
+			}
+		}
+
+		// Se devuelve el HashMap que contiene los asientos libres.
+		return asientosLibres;
 	}
 
 
 
 	@Override
 	public String toString() {
-		
-	    StringBuilder str = new StringBuilder();
-	    str.append("Estado de los Asientos del Avión:\n");
-	    str.append("--------------------------------\n");
 
-	    // Asientos de Primera Clase
-	    str.append("Primera Turista VIP:\n");
-	    str.append(estadoFilaAsientosHorizontal(1, 4, new char[]{'A', 'B', 'E', 'F'}));
-	    str.append("\n");
+		StringBuilder str = new StringBuilder();
+		str.append("Estado de los Asientos del Avión:\n");
+		str.append("--------------------------------\n");
 
-	    // Asientos de Clase Turista
-	    str.append("Clase Turista:\n");
-	    str.append(estadoFilaAsientosHorizontal(5, 33, new char[]{'A', 'B', 'C', 'D', 'E', 'F'}));
+		// Asientos de Primera Clase
+		str.append("Primera Turista VIP:\n");
+		str.append(estadoFilaAsientosHorizontal(1, 4, new char[]{'A', 'B', 'E', 'F'}));
+		str.append("\n");
 
-	    str.append("--------------------------------\n");
-	    return str.toString();
+		// Asientos de Clase Turista
+		str.append("Clase Turista:\n");
+		str.append(estadoFilaAsientosHorizontal(5, 33, new char[]{'A', 'B', 'C', 'D', 'E', 'F'}));
+
+		str.append("--------------------------------\n");
+		return str.toString();
 	}
 
 	/**
@@ -117,32 +118,32 @@ public class Avion implements AvionInterface {
 	 * @return String Una cadena que representa el estado de los asientos en la fila.
 	 */
 	private String estadoFilaAsientosHorizontal(int inicio, int fin, char[] letras) {
-	    // Se crea un StringBuilder para construir la representación de la fila de asientos.
-	    StringBuilder strFila = new StringBuilder();
-	    
-	    // Itera sobre los números de asiento en la fila.
-	    for (int numero = inicio; numero <= fin; numero++) {
-	        // Agrega el número de asiento seguido de dos puntos y un espacio.
-	        strFila.append(numero).append(": ");
-	        
-	        // Itera sobre las letras que identifican los asientos en la fila.
-	        for (char letra : letras) {
-	            // Construye el ID del asiento combinando el número y la letra.
-	            String id = numero + "" + letra;
-	            // Obtiene el asiento correspondiente al ID del HashMap de asientos.
-	            Asiento asiento = asientos.get(id);
-	            // Si se encuentra un asiento, se agrega su representación a la cadena.
-	            if (asiento != null) {
-	                strFila.append(id).append(asiento.toString()).append(" ");
-	            }
-	        }
-	        
-	        // Agrega un salto de línea al final de la fila.
-	        strFila.append("\n");
-	    }
-	    
-	    // Devuelve la representación de la fila de asientos como una cadena.
-	    return strFila.toString();
+		// Se crea un StringBuilder para construir la representación de la fila de asientos.
+		StringBuilder strFila = new StringBuilder();
+
+		// Itera sobre los números de asiento en la fila.
+		for (int numero = inicio; numero <= fin; numero++) {
+			// Agrega el número de asiento seguido de dos puntos y un espacio.
+			strFila.append(numero).append(": ");
+
+			// Itera sobre las letras que identifican los asientos en la fila.
+			for (char letra : letras) {
+				// Construye el ID del asiento combinando el número y la letra.
+				String id = numero + "" + letra;
+				// Obtiene el asiento correspondiente al ID del HashMap de asientos.
+				Asiento asiento = asientos.get(id);
+				// Si se encuentra un asiento, se agrega su representación a la cadena.
+				if (asiento != null) {
+					strFila.append(id).append(asiento.toString()).append(" ");
+				}
+			}
+
+			// Agrega un salto de línea al final de la fila.
+			strFila.append("\n");
+		}
+
+		// Devuelve la representación de la fila de asientos como una cadena.
+		return strFila.toString();
 	}
 
 
@@ -160,26 +161,26 @@ public class Avion implements AvionInterface {
 	 */
 	@Override
 	public void comprobarAsiento(String numAsiento) throws AsientoException {
-	    // Convierte el número de asiento a mayúsculas para asegurar la consistencia.
-	    numAsiento = numAsiento.toUpperCase();
-	    System.out.println("Comprobando asiento: " + numAsiento);
+		// Convierte el número de asiento a mayúsculas para asegurar la consistencia.
+		numAsiento = numAsiento.toUpperCase();
+		System.out.println("Comprobando asiento: " + numAsiento);
 
-	    // Verifica si el número de asiento buscado está presente en el conjunto de asientos.
-	    if (!asientos.containsKey(numAsiento)) {
-	        System.out.println("Asiento no encontrado: " + numAsiento);
-	        // Lanza una excepción si el asiento no es válido.
-	        throw new AsientoException("Asiento no válido");
-	    }
+		// Verifica si el número de asiento buscado está presente en el conjunto de asientos.
+		if (!asientos.containsKey(numAsiento)) {
+			System.out.println("Asiento no encontrado: " + numAsiento);
+			// Lanza una excepción si el asiento no es válido.
+			throw new AsientoException("Asiento no válido");
+		}
 
-	    // Obtiene el objeto Asiento correspondiente al número de asiento.
-	    Asiento asiento = asientos.get(numAsiento);
+		// Obtiene el objeto Asiento correspondiente al número de asiento.
+		Asiento asiento = asientos.get(numAsiento);
 
-	    // Comprueba si el asiento está disponible.
-	    if (asientoDisponible(asiento)) {
-	        System.out.println("El asiento: " + numAsiento + " no está disponible");
-	    } else {
-	        System.out.println("El asiento: " + numAsiento + " está disponible");
-	    }
+		// Comprueba si el asiento está disponible.
+		if (asientoDisponible(asiento)) {
+			System.out.println("El asiento: " + numAsiento + " no está disponible");
+		} else {
+			System.out.println("El asiento: " + numAsiento + " está disponible");
+		}
 	}
 
 
@@ -191,36 +192,36 @@ public class Avion implements AvionInterface {
 	 */
 	@Override
 	public void reservarAsiento(String numAsiento, Persona p) throws AsientoException {
-		
-	    // Verifica si el asiento buscado está presente en el conjunto de asientos.
-	    if (!asientos.containsKey(numAsiento)) {
-	        throw new AsientoException("El asiento que quieres reservar no está en el rango informado");
-	    }
 
-	    // Obtiene el objeto Asiento correspondiente al número de asiento.
-	    Asiento asiento = asientos.get(numAsiento);
+		// Verifica si el asiento buscado está presente en el conjunto de asientos.
+		if (!asientos.containsKey(numAsiento)) {
+			throw new AsientoException("El asiento que quieres reservar no está en el rango informado");
+		}
 
-	    // Verifica si el asiento está ocupado.
-	    if (asiento.estaReservado()) {
-	        throw new AsientoException("El asiento ya está ocupado");
-	    }
+		// Obtiene el objeto Asiento correspondiente al número de asiento.
+		Asiento asiento = asientos.get(numAsiento);
 
-	    // Verifica si el asiento es de tipo AsientoLibre.
-	    if (!(asiento instanceof AsientoLibre)) {
-	        throw new AsientoException("El asiento no es de tipo AsientoLibre y no se puede reservar");
-	    }
+		// Verifica si el asiento está ocupado.
+		if (asiento.estaReservado()) {
+			throw new AsientoException("El asiento ya está ocupado");
+		}
 
-	    // Realiza la reserva del asiento.
-	    AsientoLibre asientoLibre = (AsientoLibre) asiento;
-	    AsientoOcupado asientoOcupado = asientoLibre.reservar(p);
+		// Verifica si el asiento es de tipo AsientoLibre.
+		if (!(asiento instanceof AsientoLibre)) {
+			throw new AsientoException("El asiento no es de tipo AsientoLibre y no se puede reservar");
+		}
 
-	    // Actualiza el asiento en el mapa de asientos con el asiento ocupado.
-	    asientos.put(numAsiento, asientoOcupado);
+		// Realiza la reserva del asiento.
+		AsientoLibre asientoLibre = (AsientoLibre) asiento;
+		AsientoOcupado asientoOcupado = asientoLibre.reservar(p);
 
-	    // Mostrar el asiento reservado y su precio por pantalla
-	    System.out.println("Has reservado el asiento: " + numAsiento);
-	    System.out.println("Por un precio de: " + asientoLibre.getPrecio());
-	    System.out.println("De parte de David, te agradecemos la compra");
+		// Actualiza el asiento en el mapa de asientos con el asiento ocupado.
+		asientos.put(numAsiento, asientoOcupado);
+
+		// Mostrar el asiento reservado y su precio por pantalla
+		System.out.println("Has reservado el asiento: " + numAsiento);
+		System.out.println("Por un precio de: " + asientoLibre.getPrecio());
+		System.out.println("De parte de David, te agradecemos la compra");
 	}
 
 
@@ -232,71 +233,71 @@ public class Avion implements AvionInterface {
 	 * @param p La persona para la cual se están reservando los billetes.
 	 * @throws AsientoException Si no se encuentran suficientes asientos contiguos disponibles.
 	 */
-	protected void reservarVariosBilletes(int cantidadBilletes, Persona p) throws AsientoException {
-	    // Lista para almacenar los asientos disponibles.
-	    ArrayList<Asiento> asientosDisponibles = new ArrayList<>();
-	    
-	    // Itera sobre todos los asientos para encontrar los disponibles.
-	    for (Asiento asiento : asientos.values()) {
-	        if (!asiento.estaReservado()) {
-	            asientosDisponibles.add(asiento);
-	        }
-	    }
+	
+	protected void reservarVariosBilletes(int cantidadBilletes, Persona p, int restantes) throws AsientoException {
 
-	    // Obtiene los bloques contiguos de asientos disponibles.
-	    ArrayList<ArrayList<Asiento>> bloquesAsientosDisponibles = obtenerBloquesContiguos(asientosDisponibles, cantidadBilletes);
+		int disponibles = 0;
 
-	    // Si no se encuentran bloques contiguos suficientes, lanza una excepción.
-	    if (bloquesAsientosDisponibles.isEmpty()) {
-	        throw new AsientoException("No se encontraron suficientes asientos contiguos para reservar");
-	    }
+		for (Asiento asiento : asientos.values()) {
+			if (!asiento.estaReservado()) {
+				disponibles++;
+			}
+		}
 
-	    // Tomar el primer bloque encontrado de asientos disponibles.
-	    ArrayList<Asiento> asientosReservados = bloquesAsientosDisponibles.get(0);
+		if (disponibles < cantidadBilletes) {
+			throw new AsientoException("No se encontraron suficientes asientos contiguos para reservar");
+		}
 
-	    // Reserva los asientos del bloque para la persona dada.
-	    for (Asiento asiento : asientosReservados) {
-	        asiento.reservar(p);
-	    }
-	    
-	    
-	    System.out.println("De parte de David, te agradecemos la compra");
+		// Lista para almacenar los asientos disponibles.
+		ArrayList<Asiento> asientosAReservarHector = new ArrayList<>();
+
+		int seguidos = 0;
+		boolean resto = false;
+
+		// Itera sobre todos los asientos para encontrar los disponibles.
+		for (Asiento asiento : asientos.values()) {
+			if (!asiento.estaReservado()) {
+				asientosAReservarHector.add(asiento);
+				seguidos++;
+			}else {
+				asientosAReservarHector = new ArrayList<>();
+				seguidos = 0;
+			}
+			
+			if(cantidadBilletes == asientosAReservarHector.size() && seguidos == cantidadBilletes) {
+				resto = true;
+				for (int i = 0; i < asientosAReservarHector.size(); i++) {
+					asientosAReservarHector.get(i).reservar(p);
+			    }
+				if(restantes == 0) {
+					System.out.println("De parte de David, te agradecemos la compra");
+				}
+				break;
+			}
+		}
+
+		if(seguidos != cantidadBilletes) {
+			if(cantidadBilletes%2 == 0 && cantidadBilletes > 2) {
+				cantidadBilletes-=2;
+				restantes+=2;
+			}else if(cantidadBilletes > 4){
+				cantidadBilletes--;
+				restantes++;
+				cantidadBilletes-=2;
+				restantes+=2;
+			}else{
+				cantidadBilletes--;
+				restantes++;
+			}
+			reservarVariosBilletes(cantidadBilletes, p, restantes);
+		}
+
+		if(resto == true && restantes != 0) {
+			reservarVariosBilletes(restantes, p, 0);
+		}
+
+		
 	}
-
-	/**
-	 * Obtiene bloques contiguos de asientos disponibles dado un conjunto de asientos disponibles y la cantidad deseada de asientos contiguos.
-	 * @param asientosDisponibles Lista de asientos disponibles.
-	 * @param cantidadBilletes La cantidad de asientos contiguos deseada.
-	 * @return ArrayList<ArrayList<Asiento>> Lista de bloques contiguos de asientos disponibles.
-	 */
-	protected ArrayList<ArrayList<Asiento>> obtenerBloquesContiguos(ArrayList<Asiento> asientosDisponibles, int cantidadBilletes) {
-	    // Lista para almacenar los bloques contiguos de asientos.
-	    ArrayList<ArrayList<Asiento>> bloquesContiguos = new ArrayList<>();
-
-	    // Verificar si hay suficientes asientos disponibles para formar bloques.
-	    if (cantidadBilletes > asientosDisponibles.size()) {
-	        // No hay suficientes asientos disponibles para formar bloques.
-	        return bloquesContiguos; // Devolver lista vacía
-	    }
-
-	    // Inicializar la ventana deslizante.
-	    int ventanaInicio = 0;
-	    int ventanaFin = cantidadBilletes;
-
-	    // Mover la ventana deslizante a lo largo de la lista de asientos disponibles.
-	    while (ventanaFin <= asientosDisponibles.size()) {
-	        // Crear un nuevo bloque contiguo de asientos dentro de la ventana actual.
-	        ArrayList<Asiento> bloqueActual = new ArrayList<>(asientosDisponibles.subList(ventanaInicio, ventanaFin));
-	        bloquesContiguos.add(bloqueActual);
-
-	        // Deslizar la ventana una posición hacia adelante.
-	        ventanaInicio++;
-	        ventanaFin++;
-	    }
-
-	    return bloquesContiguos;
-	}
-
 
 	/**
 	 * Comprueba si un asiento está disponible (no está reservado).
@@ -304,16 +305,16 @@ public class Avion implements AvionInterface {
 	 * @return boolean true si el asiento está disponible, false si está reservado.
 	 */
 	public boolean asientoDisponible(Asiento asiento) {
-		
+
 		return !asiento.estaReservado();
-		
-	    
+
+
 	}
 
-	
-	
-	
-	
+
+
+
+
 	//NO tocar
 	public String scannerString() {
 
